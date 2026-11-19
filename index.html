@@ -1,0 +1,1927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TuProfe20 Lab: Fracciones Impropias y Equivalentes</title>
+
+    <!-- Tailwind CSS, React 18, ReactDOM y Babel -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- KaTeX para renderizado matemático nítido -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            width: 100vw;
+            height: 100dvh;
+            user-select: none;
+            font-family: 'Nunito', sans-serif;
+        }
+        .font-fun { font-family: 'Nunito', sans-serif; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); }
+            100% { transform: translateY(-105vh) rotate(360deg); }
+        }
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(16px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes jellyPop {
+            0% { transform: scale3d(.3, .3, .3); opacity: 0; }
+            25% { transform: scale3d(1.12, 1.12, 1.12); }
+            50% { transform: scale3d(.94, .94, .94); opacity: 1; }
+            75% { transform: scale3d(1.04, 1.04, 1.04); }
+            100% { transform: scale3d(1, 1, 1); opacity: 1; }
+        }
+        @keyframes robotFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes robotJump {
+            0%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-14px); }
+        }
+        @keyframes robotTalkArmL {
+            0%, 100% { transform: rotate(45deg); }
+            50% { transform: rotate(95deg); }
+        }
+        @keyframes robotTalkArmR {
+            0%, 100% { transform: rotate(-45deg); }
+            50% { transform: rotate(-95deg); }
+        }
+        @keyframes svgPop {
+            0% { opacity: 0; transform: scale(0.75); }
+            70% { opacity: 1; transform: scale(1.04); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes confettiExplosion {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--rot)); opacity: 0; }
+        }
+        @keyframes pointsZoom {
+            0% { transform: scale(0.3) rotate(-6deg); opacity: 0; }
+            55% { transform: scale(1.12) rotate(2deg); opacity: 1; }
+            75% { transform: scale(0.96) rotate(-1deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        @keyframes pulseBorder {
+            0%, 100% { stroke-opacity: 0.45; }
+            50% { stroke-opacity: 1; }
+        }
+        @keyframes slideRightToLeft {
+            0% { opacity: 0; transform: translateX(36px) scale(0.92); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        @keyframes riseUp {
+            0% { transform: translateY(22px) scale(0.8); opacity: 0.2; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes dropDown {
+            0% { transform: translateY(-22px) scale(0.8); opacity: 0.2; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        @keyframes growWhole {
+            0% { transform: scale(0.55); opacity: 0.3; }
+            70% { transform: scale(1.18); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .scrollbar-hide::-webkit-scrollbar { display: none !important; }
+        .scrollbar-hide { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+
+        .animate-floatUp { animation: floatUp linear infinite; }
+        .animate-slideInRight { animation: slideInRight 0.35s ease-out forwards; }
+        .animate-slideRTL { animation: slideRightToLeft 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-riseUp { animation: riseUp 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-dropDown { animation: dropDown 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-growWhole { animation: growWhole 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-jellyPop { animation: jellyPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-robotFloat { animation: robotFloat 3s ease-in-out infinite; }
+        .animate-robotJump { animation: robotJump 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite; }
+        .animate-robotTalkArmL { animation: robotTalkArmL 0.6s ease-in-out infinite; }
+        .animate-robotTalkArmR { animation: robotTalkArmR 0.6s ease-in-out infinite 0.1s; }
+        .animate-confettiExplosion { animation: confettiExplosion 1.9s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .animate-pointsZoom { animation: pointsZoom 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .animate-pulseBorder { animation: pulseBorder 1.3s ease-in-out infinite; }
+
+        .svg-pop {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: svgPop 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        .katex { font-weight: 800 !important; }
+        .katex-display { margin: 0 !important; padding: 0 !important; }
+        .math-enunciado .katex { font-size: clamp(1rem, 1.55vw, 1.32rem) !important; color: #fde047 !important; }
+        .math-step .katex { font-size: clamp(1.05rem, 1.55vw, 1.45rem) !important; color: #0f172a !important; }
+        .math-option .katex { font-size: clamp(1.1rem, 1.6vw, 1.48rem) !important; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, memo } = React;
+
+        // =========================================================================
+        // 1. ICONOS SVG INLINE
+        // =========================================================================
+        const Icon = ({ paths, className = "", size = 24, fill = "none", strokeWidth = "2.5" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" className={className} dangerouslySetInnerHTML={{__html: paths}} />
+        );
+
+        const VolumeX = (p) => <Icon {...p} paths='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>' />;
+        const Volume2 = (p) => <Icon {...p} paths='<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>' />;
+        const Rocket = (p) => <Icon {...p} paths='<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>' />;
+        const Home = (p) => <Icon {...p} paths='<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>' />;
+        const Trophy = (p) => <Icon {...p} paths='<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>' />;
+        const CheckCircle = (p) => <Icon {...p} paths='<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' />;
+        const ArrowRight = (p) => <Icon {...p} paths='<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>' />;
+        const Sparkles = (p) => <Icon {...p} paths='<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>' />;
+
+        // =========================================================================
+        // 2. CONTROLADOR DE AUDIO (WEB AUDIO API)
+        // =========================================================================
+        const AudioController = {
+            ctx: null, muted: false, bgmNode: null,
+            init: function() {
+                if (this.ctx) return;
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) this.ctx = new AudioContext();
+            },
+            startBGM: function() {
+                if (!this.ctx) return;
+                if (this.ctx.state === 'suspended') this.ctx.resume().catch(() => {});
+                if (this.bgmNode) return;
+                const mainGain = this.ctx.createGain();
+                mainGain.gain.value = this.muted ? 0 : 0.05;
+                const filter = this.ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 780;
+                filter.connect(mainGain);
+                mainGain.connect(this.ctx.destination);
+                this.bgmNode = { mainGain, filter, interval: null };
+                const chords = [ [55, 60, 64, 71], [52, 57, 64, 71], [53, 57, 60, 64], [50, 55, 59, 64] ];
+                let chordIndex = 0;
+                const playChord = () => {
+                    if (this.ctx.state !== 'running') return;
+                    const chord = chords[chordIndex];
+                    chordIndex = (chordIndex + 1) % chords.length;
+                    chord.forEach((midi, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = 440 * Math.pow(2, (midi - 69) / 12);
+                        const now = this.ctx.currentTime;
+                        const delay = i * 0.2;
+                        gain.gain.setValueAtTime(0, now + delay);
+                        gain.gain.linearRampToValueAtTime(0.14, now + delay + 2);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 7.5);
+                        osc.connect(gain);
+                        gain.connect(filter);
+                        osc.start(now + delay);
+                        osc.stop(now + delay + 7.5);
+                    });
+                };
+                playChord();
+                this.bgmNode.interval = setInterval(playChord, 6000);
+            },
+            play: function(type) {
+                if (this.muted || !this.ctx) return;
+                if (this.ctx.state === 'suspended') this.ctx.resume();
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                const now = this.ctx.currentTime;
+                if (type === 'pop') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(540, now);
+                    osc.frequency.exponentialRampToValueAtTime(880, now + 0.09);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.09);
+                    osc.start(now);
+                    osc.stop(now + 0.09);
+                } else if (type === 'cut') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(920, now + 0.14);
+                    gain.gain.setValueAtTime(0.22, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+                    osc.start(now);
+                    osc.stop(now + 0.14);
+                } else if (type === 'success') {
+                    osc.disconnect();
+                    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+                    notes.forEach((freq, i) => {
+                        const o = this.ctx.createOscillator();
+                        const g = this.ctx.createGain();
+                        o.type = 'triangle';
+                        o.frequency.value = freq;
+                        o.connect(g);
+                        g.connect(this.ctx.destination);
+                        const startTime = now + (i * 0.065);
+                        g.gain.setValueAtTime(0, startTime);
+                        g.gain.linearRampToValueAtTime(0.2, startTime + 0.04);
+                        g.gain.linearRampToValueAtTime(0, startTime + 0.36);
+                        o.start(startTime);
+                        o.stop(startTime + 0.36);
+                    });
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(240, now);
+                    osc.frequency.linearRampToValueAtTime(165, now + 0.22);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+                    osc.start(now);
+                    osc.stop(now + 0.22);
+                } else if (type === 'swoosh') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.exponentialRampToValueAtTime(75, now + 0.18);
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.linearRampToValueAtTime(0.01, now + 0.18);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                }
+            },
+            toggleMute: function() {
+                this.muted = !this.muted;
+                if (this.bgmNode && this.ctx) {
+                    this.bgmNode.mainGain.gain.setTargetAtTime(this.muted ? 0 : 0.05, this.ctx.currentTime, 0.1);
+                }
+                return this.muted;
+            }
+        };
+
+        // =========================================================================
+        // 3. COMPONENTE KATEX
+        // =========================================================================
+        const MathDisplay = memo(({ latex, className = "", inline = false, align = "center" }) => {
+            const containerRef = useRef(null);
+            useEffect(() => {
+                if (containerRef.current && window.katex) {
+                    try {
+                        window.katex.render(latex, containerRef.current, {
+                            displayMode: !inline,
+                            throwOnError: false,
+                            strict: false,
+                            trust: true
+                        });
+                    } catch (e) {
+                        containerRef.current.innerText = latex;
+                    }
+                }
+            }, [latex, inline]);
+
+            if (inline) {
+                return <span ref={containerRef} className={`inline-block align-middle ${className}`} />;
+            }
+            return (
+                <div className={`w-full flex items-center ${align === 'center' ? 'justify-center' : 'justify-start'} ${className}`}>
+                    <div ref={containerRef} className={align === 'center' ? 'text-center' : 'text-left'} />
+                </div>
+            );
+        });
+
+        // =========================================================================
+        // 4. PIZARRA LIBRE SUPERPUESTA (OPCIONAL PARA APUNTES RÁPIDOS)
+        // =========================================================================
+        const DrawingCanvas = () => {
+            const canvasRef = useRef(null);
+            const [isDrawing, setIsDrawing] = useState(false);
+            const [isDrawMode, setIsDrawMode] = useState(false);
+            const [penColor, setPenColor] = useState('#ef4444');
+            const activePointerRef = useRef(null);
+
+            const playPop = () => { AudioController.init(); AudioController.startBGM(); AudioController.play('pop'); };
+
+            useEffect(() => {
+                const canvas = canvasRef.current;
+                if (!canvas || !canvas.parentElement) return;
+                const observer = new ResizeObserver((entries) => {
+                    for (let entry of entries) {
+                        const { width, height } = entry.contentRect;
+                        const ctx = canvas.getContext('2d');
+                        let imgData = null;
+                        if (canvas.width > 0 && canvas.height > 0) {
+                            try { imgData = ctx.getImageData(0, 0, canvas.width, canvas.height); } catch (e) {}
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        if (imgData) ctx.putImageData(imgData, 0, 0);
+                    }
+                });
+                observer.observe(canvas.parentElement);
+                return () => observer.disconnect();
+            }, []);
+
+            const startDrawing = (e) => {
+                if (!isDrawMode || activePointerRef.current !== null || (e.pointerType === 'mouse' && e.button !== 0)) return;
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                const rect = canvas.getBoundingClientRect();
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = penColor;
+                ctx.beginPath();
+                ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+                activePointerRef.current = e.pointerId;
+                canvas.setPointerCapture(e.pointerId);
+                setIsDrawing(true);
+            };
+
+            const draw = (e) => {
+                if (activePointerRef.current !== e.pointerId || !isDrawMode) return;
+                const canvas = canvasRef.current;
+                const ctx = canvas.getContext('2d');
+                const rect = canvas.getBoundingClientRect();
+                ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                ctx.stroke();
+            };
+
+            const stopDrawing = () => {
+                const canvas = canvasRef.current;
+                const pointer = activePointerRef.current;
+                activePointerRef.current = null;
+                if (pointer !== null && canvas && canvas.hasPointerCapture(pointer)) canvas.releasePointerCapture(pointer);
+                if (isDrawing) { canvas.getContext('2d').closePath(); setIsDrawing(false); }
+            };
+
+            const clearCanvas = () => {
+                playPop();
+                const canvas = canvasRef.current;
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+            };
+
+            return (
+                <>
+                    <div style={{ zIndex: 120 }} className="absolute top-2 right-2 flex items-center gap-1.5 bg-white/90 p-1.5 rounded-xl backdrop-blur-sm shadow-md border border-slate-200 pointer-events-auto">
+                        <button
+                            onClick={() => { playPop(); setIsDrawMode(!isDrawMode); }}
+                            className={`px-2.5 py-1 text-xs font-black rounded-lg border-2 transition-all ${isDrawMode ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-white text-slate-600 border-slate-300'}`}
+                        >
+                            {isDrawMode ? '🖱️ Volver a Interactuar' : '🖊️ Apuntes Libres'}
+                        </button>
+                        {isDrawMode && (
+                            <>
+                                {['#ef4444', '#2563eb', '#16a34a', '#0f172a'].map(c => (
+                                    <button
+                                        key={c}
+                                        onClick={() => { playPop(); setPenColor(c); }}
+                                        style={{ backgroundColor: c }}
+                                        className={`w-6 h-6 rounded-full border-2 ${penColor === c ? 'border-yellow-300 scale-110' : 'border-white'}`}
+                                    />
+                                ))}
+                                <button onClick={clearCanvas} className="px-2 py-1 text-xs font-black bg-rose-50 text-rose-600 border border-rose-200 rounded-lg">🗑️</button>
+                            </>
+                        )}
+                    </div>
+                    <canvas
+                        ref={canvasRef}
+                        style={{ zIndex: 100, pointerEvents: isDrawMode ? 'auto' : 'none', touchAction: isDrawMode ? 'none' : 'auto' }}
+                        className={`absolute inset-0 ${isDrawMode ? 'cursor-crosshair' : ''}`}
+                        onPointerDown={startDrawing}
+                        onPointerMove={draw}
+                        onPointerUp={e => { if (activePointerRef.current === e.pointerId) { draw(e); stopDrawing(); } }}
+                        onPointerCancel={stopDrawing}
+                    />
+                </>
+            );
+        };
+
+        // =========================================================================
+        // 5. DATOS DE LOS 3 BLOQUES (5 EJERCICIOS POR BLOQUE = 15 RETOS)
+        // =========================================================================
+        const BLOCKS = [
+            {
+                id: 1,
+                title: "Bloque 1",
+                name: "Pinta y Relaciona Gráficos",
+                shortDesc: "Pinta los 3 gráficos según las fracciones impropias o mixtas y relaciónalos (4 opciones)",
+                colorFrom: "from-sky-500",
+                colorTo: "to-blue-700",
+                badgeBg: "bg-sky-500",
+                icon: "🎨",
+                exercises: [
+                    {
+                        id: "1-1",
+                        prompt: "Pinta cada gráfico según corresponda y relaciónalo con su fracción impropia (sobra 1 fracción):",
+                        graphs: [
+                            { id: "g0", label: "Gráfico A", boxes: 3, partsPerBox: 4, targetPainted: 9, targetFracId: "f1", color: "#0ea5e9" },
+                            { id: "g1", label: "Gráfico B", boxes: 4, partsPerBox: 3, targetPainted: 10, targetFracId: "f3", color: "#f97316" },
+                            { id: "g2", label: "Gráfico C", boxes: 3, partsPerBox: 5, targetPainted: 13, targetFracId: "f0", color: "#10b981" }
+                        ],
+                        fractions: [
+                            { id: "f0", latex: String.raw`\dfrac{13}{5}` },
+                            { id: "f1", latex: String.raw`\dfrac{9}{4}` },
+                            { id: "f2", latex: String.raw`\dfrac{11}{4}` },
+                            { id: "f3", latex: String.raw`\dfrac{10}{3}` }
+                        ],
+                        explanation: "Gráfico A tiene 9/4 pintados, Gráfico B tiene 10/3 pintados y Gráfico C tiene 13/5 pintados (11/4 era el distractor)."
+                    },
+                    {
+                        id: "1-2",
+                        prompt: "Pinta las unidades para representar 3 fracciones impropias y únelas con su tarjeta:",
+                        graphs: [
+                            { id: "g0", label: "Gráfico A", boxes: 4, partsPerBox: 5, targetPainted: 17, targetFracId: "f2", color: "#0284c7" },
+                            { id: "g1", label: "Gráfico B", boxes: 4, partsPerBox: 2, targetPainted: 7, targetFracId: "f0", color: "#ec4899" },
+                            { id: "g2", label: "Gráfico C", boxes: 3, partsPerBox: 4, targetPainted: 11, targetFracId: "f3", color: "#8b5cf6" }
+                        ],
+                        fractions: [
+                            { id: "f0", latex: String.raw`\dfrac{7}{2}` },
+                            { id: "f1", latex: String.raw`\dfrac{17}{4}` },
+                            { id: "f2", latex: String.raw`\dfrac{17}{5}` },
+                            { id: "f3", latex: String.raw`\dfrac{11}{4}` }
+                        ],
+                        explanation: "Gráfico A = 17/5, Gráfico B = 7/2 y Gráfico C = 11/4. ¡Cada denominador indica en cuántas partes se divide cada unidad!"
+                    },
+                    {
+                        id: "1-3",
+                        prompt: "Ahora pinta los 3 gráficos y vincúlalos con su número mixto correspondiente (sobra 1):",
+                        graphs: [
+                            { id: "g0", label: "Gráfico A", boxes: 4, partsPerBox: 3, targetPainted: 10, targetFracId: "f1", color: "#f97316" },
+                            { id: "g1", label: "Gráfico B", boxes: 3, partsPerBox: 4, targetPainted: 9, targetFracId: "f3", color: "#10b981" },
+                            { id: "g2", label: "Gráfico C", boxes: 3, partsPerBox: 6, targetPainted: 15, targetFracId: "f0", color: "#6366f1" }
+                        ],
+                        fractions: [
+                            { id: "f0", latex: String.raw`2\dfrac{3}{6}` },
+                            { id: "f1", latex: String.raw`3\dfrac{1}{3}` },
+                            { id: "f2", latex: String.raw`3\dfrac{2}{3}` },
+                            { id: "f3", latex: String.raw`2\dfrac{1}{4}` }
+                        ],
+                        explanation: "Gráfico A = 3 enteros y 1/3 (3 1/3), Gráfico B = 2 enteros y 1/4 (2 1/4), Gráfico C = 2 enteros y 3/6 (2 3/6)."
+                    },
+                    {
+                        id: "1-4",
+                        prompt: "Pinta exactamente la cantidad de partecitas que pide cada fracción impropia y relaciónalas:",
+                        graphs: [
+                            { id: "g0", label: "Gráfico A", boxes: 3, partsPerBox: 6, targetPainted: 14, targetFracId: "f2", color: "#14b8a6" },
+                            { id: "g1", label: "Gráfico B", boxes: 5, partsPerBox: 2, targetPainted: 9, targetFracId: "f3", color: "#f43f5e" },
+                            { id: "g2", label: "Gráfico C", boxes: 3, partsPerBox: 3, targetPainted: 8, targetFracId: "f0", color: "#eab308" }
+                        ],
+                        fractions: [
+                            { id: "f0", latex: String.raw`\dfrac{8}{3}` },
+                            { id: "f1", latex: String.raw`\dfrac{14}{6}` },
+                            { id: "f2", latex: String.raw`\dfrac{14}{6}` },
+                            { id: "f3", latex: String.raw`\dfrac{9}{2}` }
+                        ].map((item, idx) => idx === 1 ? { id: "f1", latex: String.raw`\dfrac{9}{5}` } : item),
+                        explanation: "Gráfico A tiene 14/6 pintados, Gráfico B tiene 9/2 pintados y Gráfico C tiene 8/3 pintados."
+                    },
+                    {
+                        id: "1-5",
+                        prompt: "¡Reto final del Bloque 1! Pinta los 3 gráficos y relaciona cada uno con su número mixto:",
+                        graphs: [
+                            { id: "g0", label: "Gráfico A", boxes: 4, partsPerBox: 4, targetPainted: 15, targetFracId: "f3", color: "#3b82f6" },
+                            { id: "g1", label: "Gráfico B", boxes: 3, partsPerBox: 5, targetPainted: 12, targetFracId: "f0", color: "#ec4899" },
+                            { id: "g2", label: "Gráfico C", boxes: 4, partsPerBox: 2, targetPainted: 7, targetFracId: "f2", color: "#10b981" }
+                        ],
+                        fractions: [
+                            { id: "f0", latex: String.raw`2\dfrac{2}{5}` },
+                            { id: "f1", latex: String.raw`4\dfrac{1}{4}` },
+                            { id: "f2", latex: String.raw`3\dfrac{1}{2}` },
+                            { id: "f3", latex: String.raw`3\dfrac{3}{4}` }
+                        ],
+                        explanation: "Gráfico A = 3 3/4 (15 cuartos), Gráfico B = 2 2/5 (12 quintos) y Gráfico C = 3 1/2 (7 mitades)."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Bloque 2",
+                name: "Conversión Animada Paso a Paso",
+                shortDesc: "3 retos de Impropia → Mixto (división dinámica) y 2 retos de Mixto → Impropia",
+                colorFrom: "from-amber-500",
+                colorTo: "to-orange-600",
+                badgeBg: "bg-amber-500",
+                icon: "🔄",
+                exercises: [
+                    {
+                        id: "2-1",
+                        direction: "improper_to_mixed",
+                        num: 17,
+                        den: 5,
+                        whole: 3,
+                        rem: 2,
+                        color: "#0ea5e9",
+                        prompt: "Convierte la fracción impropia 17/5 a número mixto observando la división de derecha a izquierda:",
+                        options: [
+                            { latex: String.raw`3\dfrac{2}{5}`, correct: true },
+                            { latex: String.raw`2\dfrac{3}{5}`, correct: false },
+                            { latex: String.raw`5\dfrac{2}{3}`, correct: false },
+                            { latex: String.raw`3\dfrac{3}{5}`, correct: false }
+                        ],
+                        explanation: "Al dividir 17 ÷ 5: el cociente 3 crece como entero, el residuo 2 sube al numerador y el divisor 5 baja al denominador → 3 2/5."
+                    },
+                    {
+                        id: "2-2",
+                        direction: "improper_to_mixed",
+                        num: 13,
+                        den: 4,
+                        whole: 3,
+                        rem: 1,
+                        color: "#10b981",
+                        prompt: "Convierte 13/4 a número mixto: ejecuta los pasos de la división inexacta de derecha a izquierda:",
+                        options: [
+                            { latex: String.raw`4\dfrac{1}{3}`, correct: false },
+                            { latex: String.raw`3\dfrac{1}{4}`, correct: true },
+                            { latex: String.raw`3\dfrac{3}{4}`, correct: false },
+                            { latex: String.raw`2\dfrac{5}{4}`, correct: false }
+                        ],
+                        explanation: "13 ÷ 4 tiene cociente 3 (parte entera) y residuo 1 (numerador), manteniendo el divisor 4 abajo → 3 1/4."
+                    },
+                    {
+                        id: "2-3",
+                        direction: "improper_to_mixed",
+                        num: 23,
+                        den: 6,
+                        whole: 3,
+                        rem: 5,
+                        color: "#8b5cf6",
+                        prompt: "Convierte 23/6 a número mixto mirando cómo el cociente crece, el residuo sube y el divisor baja:",
+                        options: [
+                            { latex: String.raw`4\dfrac{1}{6}`, correct: false },
+                            { latex: String.raw`3\dfrac{4}{6}`, correct: false },
+                            { latex: String.raw`3\dfrac{5}{6}`, correct: true },
+                            { latex: String.raw`5\dfrac{3}{6}`, correct: false }
+                        ],
+                        explanation: "23 ÷ 6 da cociente 3 y residuo 5 (porque 3 × 6 = 18 y sobran 5). Por eso queda 3 5/6."
+                    },
+                    {
+                        id: "2-4",
+                        direction: "mixed_to_improper",
+                        num: 11,
+                        den: 3,
+                        whole: 3,
+                        rem: 2,
+                        color: "#f97316",
+                        prompt: "Convierte el número mixto 3 2/3 a fracción impropia: mira cómo el entero multiplica al denominador y suma al numerador:",
+                        options: [
+                            { latex: String.raw`\dfrac{8}{3}`, correct: false },
+                            { latex: String.raw`\dfrac{11}{3}`, correct: true },
+                            { latex: String.raw`\dfrac{13}{3}`, correct: false },
+                            { latex: String.raw`\dfrac{11}{2}`, correct: false }
+                        ],
+                        explanation: "Multiplicamos entero × denominador (3 × 3 = 9) y sumamos el numerador (+ 2 = 11). Mantenemos el 3 abajo → 11/3."
+                    },
+                    {
+                        id: "2-5",
+                        direction: "mixed_to_improper",
+                        num: 19,
+                        den: 4,
+                        whole: 4,
+                        rem: 3,
+                        color: "#ec4899",
+                        prompt: "¡Último reto del Bloque 2! Convierte 4 3/4 a fracción impropia paso a paso:",
+                        options: [
+                            { latex: String.raw`\dfrac{19}{4}`, correct: true },
+                            { latex: String.raw`\dfrac{15}{4}`, correct: false },
+                            { latex: String.raw`\dfrac{16}{4}`, correct: false },
+                            { latex: String.raw`\dfrac{19}{3}`, correct: false }
+                        ],
+                        explanation: "4 enteros × 4 cuartos = 16 cuartos; más 3 cuartos = 19 cuartos → 19/4."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Bloque 3",
+                name: "Traza y Pinta Equivalentes",
+                shortDesc: "¡Traza cortes (÷2, ÷3 y ÷4) y pinta exactamente el mismo tamaño!",
+                colorFrom: "from-emerald-500",
+                colorTo: "to-teal-700",
+                badgeBg: "bg-emerald-500",
+                icon: "✂️",
+                exercises: [
+                    {
+                        id: "3-1",
+                        prompt: "El gráfico izquierdo muestra 3/4. Traza 1 línea horizontal (dividir en 2 filas) y pinta el MISMO tamaño:",
+                        baseCols: 4,
+                        baseRows: 1,
+                        basePaintedCols: 3,
+                        targetCols: 4,
+                        targetRows: 2,
+                        cutOrientation: "horizontal",
+                        cutCount: 1,
+                        baseColor: "#10b981",
+                        targetColor: "#ec4899",
+                        baseLatex: String.raw`\dfrac{3}{4}`,
+                        options: [
+                            { latex: String.raw`\dfrac{5}{8}`, correct: false },
+                            { latex: String.raw`\dfrac{6}{8}`, correct: true },
+                            { latex: String.raw`\dfrac{4}{6}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{8}`, correct: false }
+                        ],
+                        explanation: "Al trazar 1 línea horizontal duplicamos las partes (×2): 3/4 = 6/8."
+                    },
+                    {
+                        id: "3-2",
+                        prompt: "Tenemos 2/3 pintados. Traza 2 líneas horizontales (dividir en 3 filas iguales) y pinta la misma región:",
+                        baseCols: 3,
+                        baseRows: 1,
+                        basePaintedCols: 2,
+                        targetCols: 3,
+                        targetRows: 3,
+                        cutOrientation: "horizontal",
+                        cutCount: 2,
+                        baseColor: "#8b5cf6",
+                        targetColor: "#06b6d4",
+                        baseLatex: String.raw`\dfrac{2}{3}`,
+                        options: [
+                            { latex: String.raw`\dfrac{4}{9}`, correct: false },
+                            { latex: String.raw`\dfrac{6}{9}`, correct: true },
+                            { latex: String.raw`\dfrac{6}{6}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{9}`, correct: false }
+                        ],
+                        explanation: "Con 2 líneas horizontales cada tercio queda partido en 3 (3 × 3 = 9 cuadros). El mismo tamaño ocupa 6 cuadros → 2/3 = 6/9."
+                    },
+                    {
+                        id: "3-3",
+                        prompt: "La figura muestra 1/2 pintado. Traza 3 líneas verticales (dividir en 4 columnas) y pinta el mismo tamaño:",
+                        baseCols: 1,
+                        baseRows: 2,
+                        basePaintedRows: 1,
+                        targetCols: 4,
+                        targetRows: 2,
+                        cutOrientation: "vertical",
+                        cutCount: 3,
+                        baseColor: "#0ea5e9",
+                        targetColor: "#f59e0b",
+                        baseLatex: String.raw`\dfrac{1}{2}`,
+                        options: [
+                            { latex: String.raw`\dfrac{4}{8}`, correct: true },
+                            { latex: String.raw`\dfrac{2}{8}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{8}`, correct: false },
+                            { latex: String.raw`\dfrac{4}{6}`, correct: false }
+                        ],
+                        explanation: "Al trazar 3 líneas verticales dividimos cada mitad en 4 partes (×4): ahora hay 8 cuadros y 4 pintados → 1/2 = 4/8."
+                    },
+                    {
+                        id: "3-4",
+                        prompt: "Observa 1/4 pintado. Traza 2 líneas horizontales (3 filas) y pinta exactamente la misma columna:",
+                        baseCols: 4,
+                        baseRows: 1,
+                        basePaintedCols: 1,
+                        targetCols: 4,
+                        targetRows: 3,
+                        cutOrientation: "horizontal",
+                        cutCount: 2,
+                        baseColor: "#f97316",
+                        targetColor: "#10b981",
+                        baseLatex: String.raw`\dfrac{1}{4}`,
+                        options: [
+                            { latex: String.raw`\dfrac{2}{12}`, correct: false },
+                            { latex: String.raw`\dfrac{4}{12}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{12}`, correct: true },
+                            { latex: String.raw`\dfrac{3}{8}`, correct: false }
+                        ],
+                        explanation: "Con 2 líneas horizontales dividimos los cuartos en 3 filas (4 × 3 = 12 partes) y la franja pintada tiene 3 → 1/4 = 3/12."
+                    },
+                    {
+                        id: "3-5",
+                        prompt: "¡Reto maestro! Tenemos 2/5 pintados. Traza 3 líneas horizontales (4 filas) y pinta el mismo tamaño:",
+                        baseCols: 5,
+                        baseRows: 1,
+                        basePaintedCols: 2,
+                        targetCols: 5,
+                        targetRows: 4,
+                        cutOrientation: "horizontal",
+                        cutCount: 3,
+                        baseColor: "#ec4899",
+                        targetColor: "#6366f1",
+                        baseLatex: String.raw`\dfrac{2}{5}`,
+                        options: [
+                            { latex: String.raw`\dfrac{6}{20}`, correct: false },
+                            { latex: String.raw`\dfrac{8}{20}`, correct: true },
+                            { latex: String.raw`\dfrac{10}{20}`, correct: false },
+                            { latex: String.raw`\dfrac{8}{15}`, correct: false }
+                        ],
+                        explanation: "Al trazar 3 líneas horizontales obtenemos 4 filas × 5 columnas = 20 partes, y las 2 columnas pintadas suman 8 → 2/5 = 8/20."
+                    }
+                ]
+            }
+        ];
+
+        // =========================================================================
+        // 6. COMPONENTES VISUALES DE CADA BLOQUE
+        // =========================================================================
+
+        // --- BLOQUE 1: PINTA LOS 3 GRÁFICOS Y RELACIÓNALOS CON 4 FRACCIONES ---
+        const Block1MatchVisual = ({
+            exercise,
+            cellsByGraph,
+            onToggleCell,
+            selectedGraphIdx,
+            onSelectGraph,
+            links,
+            onLinkFraction,
+            checkedStatus,
+            onVerifyMatch,
+            onResetExercise
+        }) => {
+            const { graphs, fractions } = exercise;
+            const linkColors = ['#0284c7', '#ea580c', '#059669'];
+            const allLinked = Object.keys(links).length === graphs.length;
+
+            // Verificar si una fracción ya está vinculada a algún gráfico
+            const getGraphLinkedToFrac = (fracId) => {
+                const entry = Object.entries(links).find(([gIdx, fId]) => fId === fracId);
+                return entry ? Number(entry[0]) : null;
+            };
+
+            return (
+                <div className="w-full h-full flex flex-col justify-between gap-2.5 p-2 sm:p-4 overflow-y-auto scrollbar-hide">
+                    {/* Instrucción rápida + Reiniciar */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
+                        <div className="text-xs sm:text-sm font-extrabold text-slate-700">
+                            <span className="text-indigo-700 font-black">Paso 1:</span> Pinta cada gráfico según las fracciones de la derecha.{' '}
+                            <span className="text-emerald-700 font-black">Paso 2:</span> Toca <strong>"Vincular"</strong> y luego su fracción.
+                        </div>
+                        {checkedStatus === null && (
+                            <button
+                                onClick={onResetExercise}
+                                className="px-2.5 py-1 text-xs font-black bg-white text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50 active:scale-95"
+                            >
+                                ↺ Limpiar todo
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Zona central: Columna Izquierda (3 gráficos para pintar) + Columna Derecha (4 fracciones) */}
+                    <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 items-center">
+                        
+                        {/* COLUMNA IZQUIERDA: 3 GRÁFICOS INTERACTIVOS (7 columnas) */}
+                        <div className="lg:col-span-7 flex flex-col gap-2.5">
+                            {graphs.map((g, gIdx) => {
+                                const gCells = cellsByGraph[gIdx] || [];
+                                const paintedCount = gCells.filter(Boolean).length;
+                                const isSelected = selectedGraphIdx === gIdx;
+                                const linkedFracId = links[gIdx];
+                                const linkedFrac = fractions.find(f => f.id === linkedFracId);
+
+                                let rowBorder = isSelected
+                                    ? 'border-yellow-400 bg-yellow-50/70 ring-2 ring-yellow-300'
+                                    : 'border-slate-200 bg-white';
+
+                                if (checkedStatus !== null) {
+                                    const isRowOk = paintedCount === g.targetPainted && linkedFracId === g.targetFracId;
+                                    rowBorder = isRowOk
+                                        ? 'border-emerald-500 bg-emerald-50'
+                                        : 'border-rose-500 bg-rose-50';
+                                }
+
+                                return (
+                                    <div
+                                        key={g.id}
+                                        className={`p-2.5 sm:p-3 rounded-2xl border-[3px] shadow-sm transition-all flex flex-col sm:flex-row items-center justify-between gap-2.5 ${rowBorder}`}
+                                    >
+                                        <div className="flex flex-col items-center sm:items-start gap-1.5 flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <span
+                                                    className="px-2.5 py-0.5 rounded-full text-white text-xs font-black"
+                                                    style={{ backgroundColor: linkColors[gIdx] }}
+                                                >
+                                                    {g.label}
+                                                </span>
+                                                <span className="text-xs font-extrabold text-slate-600">
+                                                    Pintado: <strong>{paintedCount}</strong> / {g.boxes * g.partsPerBox} (unidad de {g.partsPerBox})
+                                                </span>
+                                            </div>
+
+                                            {/* Unidades del gráfico (el alumno toca para pintar) */}
+                                            <div className="flex flex-wrap items-center gap-2">
+                                                {Array.from({ length: g.boxes }).map((_, bIdx) => {
+                                                    const start = bIdx * g.partsPerBox;
+                                                    return (
+                                                        <div
+                                                            key={bIdx}
+                                                            className="flex rounded-xl border-[2.5px] border-slate-800 overflow-hidden bg-slate-200 shadow-xs"
+                                                            style={{ width: g.boxes >= 5 ? '64px' : '78px', height: '48px' }}
+                                                        >
+                                                            {Array.from({ length: g.partsPerBox }).map((__, pIdx) => {
+                                                                const cIdx = start + pIdx;
+                                                                const lit = gCells[cIdx];
+                                                                return (
+                                                                    <button
+                                                                        key={pIdx}
+                                                                        type="button"
+                                                                        disabled={checkedStatus !== null}
+                                                                        onClick={() => onToggleCell(gIdx, cIdx)}
+                                                                        style={{ backgroundColor: lit ? g.color : '#e5e7eb' }}
+                                                                        className={`flex-1 h-full transition-colors cursor-pointer ${
+                                                                            pIdx < g.partsPerBox - 1 ? 'border-r-[2px] border-dashed border-white' : ''
+                                                                        }`}
+                                                                    />
+                                                                );
+                                                            })}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+
+                                        {/* Botón para vincular este gráfico con una fracción */}
+                                        <div className="flex items-center gap-2 shrink-0">
+                                            {checkedStatus === null ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => onSelectGraph(gIdx)}
+                                                    className={`px-3 py-2 rounded-xl font-black text-xs transition-all flex items-center gap-1.5 border-2 ${
+                                                        isSelected
+                                                            ? 'bg-yellow-400 text-slate-950 border-amber-500 scale-105 shadow-md'
+                                                            : linkedFrac
+                                                                ? 'bg-indigo-100 text-indigo-900 border-indigo-400'
+                                                                : 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-indigo-50'
+                                                    }`}
+                                                >
+                                                    {linkedFrac ? (
+                                                        <>
+                                                            <span>Unido a:</span>
+                                                            <MathDisplay inline latex={linkedFrac.latex} />
+                                                        </>
+                                                    ) : (
+                                                        <span>{isSelected ? '👉 Elige fracción →' : '🔗 Vincular'}</span>
+                                                    )}
+                                                </button>
+                                            ) : (
+                                                <div className="text-xs font-black px-2.5 py-1 rounded-lg bg-white border border-slate-300">
+                                                    {paintedCount === g.targetPainted && linkedFracId === g.targetFracId ? '✅ Correcto' : `❌ Era ${g.targetPainted}/${g.partsPerBox}`}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        {/* COLUMNA DERECHA: 4 OPCIONES DE FRACCIONES (5 columnas, 1 sobra) */}
+                        <div className="lg:col-span-5 bg-slate-100/90 p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 flex flex-col gap-2.5">
+                            <div className="text-xs font-black uppercase tracking-wider text-indigo-700 text-center">
+                                {selectedGraphIdx !== null
+                                    ? `Selecciona la fracción para ${graphs[selectedGraphIdx].label}:`
+                                    : '4 Fracciones Disponibles (1 sobra)'}
+                            </div>
+                            <div className="grid grid-cols-2 lg:grid-cols-1 gap-2.5">
+                                {fractions.map((frac) => {
+                                    const linkedByGraphIdx = getGraphLinkedToFrac(frac.id);
+                                    const isLinked = linkedByGraphIdx !== null;
+                                    const canClick = checkedStatus === null && selectedGraphIdx !== null;
+
+                                    return (
+                                        <button
+                                            key={frac.id}
+                                            type="button"
+                                            disabled={!canClick}
+                                            onClick={() => onLinkFraction(frac.id)}
+                                            className={`p-2.5 sm:p-3 rounded-2xl border-[3px] font-black transition-all flex items-center justify-between px-4 math-option ${
+                                                canClick
+                                                    ? 'bg-white border-indigo-400 hover:bg-indigo-50 hover:scale-[1.02] cursor-pointer shadow-sm'
+                                                    : isLinked
+                                                        ? 'bg-indigo-50 border-indigo-400 text-indigo-950'
+                                                        : 'bg-white/85 border-slate-300 text-slate-800'
+                                            }`}
+                                        >
+                                            <MathDisplay inline latex={frac.latex} />
+                                            {isLinked ? (
+                                                <span
+                                                    className="px-2.5 py-0.5 rounded-full text-white text-xs font-black"
+                                                    style={{ backgroundColor: linkColors[linkedByGraphIdx] }}
+                                                >
+                                                    {graphs[linkedByGraphIdx].label}
+                                                </span>
+                                            ) : (
+                                                <span className="text-[11px] font-bold text-slate-400">
+                                                    {canClick ? 'Tocar para unir' : 'Sin unir'}
+                                                </span>
+                                            )}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Botón Comprobar Pintado y Relaciones */}
+                    {checkedStatus === null && (
+                        <div className="flex justify-center pt-1">
+                            <button
+                                type="button"
+                                disabled={!allLinked}
+                                onClick={onVerifyMatch}
+                                className="px-7 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black text-sm sm:text-base shadow-lg hover:brightness-110 active:scale-95 disabled:opacity-40 transition-all"
+                            >
+                                {allLinked ? '✅ Comprobar Pintado y Relaciones' : `Faltan ${graphs.length - Object.keys(links).length} gráfico(s) por vincular`}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // --- BLOQUE 2: GRÁFICO CENTRAL + CONVERSIÓN ANIMADA DE DERECHA A IZQUIERDA ---
+        const Block2AnimatedVisual = ({ exercise, animStep, onNextAnimStep, onReplayAnim }) => {
+            const { direction, num, den, whole, rem, color } = exercise;
+            const totalBoxes = whole + (rem > 0 ? 1 : 0);
+
+            return (
+                <div className="w-full h-full flex flex-col justify-between gap-2.5 p-2 sm:p-4 overflow-y-auto scrollbar-hide">
+                    
+                    {/* 1. GRÁFICO EN LA PARTE CENTRAL SUPERIOR */}
+                    <div className="bg-slate-100/90 rounded-2xl p-3 border-2 border-slate-200 flex flex-col items-center gap-2">
+                        <div className="text-xs font-black uppercase tracking-wider text-slate-600">
+                            Representación Gráfica ({whole} enteros completos + {rem}/{den})
+                        </div>
+                        <div className="flex flex-wrap items-center justify-center gap-3">
+                            {Array.from({ length: totalBoxes }).map((_, bIdx) => {
+                                const filledInThisBox = bIdx < whole ? den : rem;
+                                return (
+                                    <div key={bIdx} className="flex flex-col items-center gap-1 svg-pop" style={{ animationDelay: `${bIdx * 0.06}s` }}>
+                                        <div className="flex rounded-xl border-[3px] border-slate-800 overflow-hidden bg-slate-200 shadow-sm" style={{ width: '96px', height: '54px' }}>
+                                            {Array.from({ length: den }).map((__, pIdx) => {
+                                                const isLit = pIdx < filledInThisBox;
+                                                return (
+                                                    <div
+                                                        key={pIdx}
+                                                        style={{ backgroundColor: isLit ? color : '#e5e7eb' }}
+                                                        className={`flex-1 h-full ${pIdx < den - 1 ? 'border-r-2 border-dashed border-white' : ''}`}
+                                                    />
+                                                );
+                                            })}
+                                        </div>
+                                        <span className="text-[11px] font-black text-slate-700">
+                                            {bIdx < whole ? `Entero ${bIdx + 1}` : `Sobra ${rem}/${den}`}
+                                        </span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* 2. PARTE INFERIOR: ANIMACIÓN OPERATIVA DE DERECHA A IZQUIERDA */}
+                    <div className="flex-1 bg-white rounded-2xl border-[3px] border-indigo-200 p-3 sm:p-4 flex flex-col justify-between shadow-inner">
+                        <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                            <span className="text-xs font-black uppercase tracking-wider text-indigo-700">
+                                {direction === 'improper_to_mixed'
+                                    ? 'División Inexacta Animada (Observa de derecha → izquierda)'
+                                    : 'Multiplicación y Suma Animada (Observa de derecha → izquierda)'}
+                            </span>
+                            <button
+                                type="button"
+                                onClick={onReplayAnim}
+                                className="px-2.5 py-0.5 text-[11px] font-black bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-lg hover:bg-indigo-100"
+                            >
+                                ↻ Repetir animación
+                            </button>
+                        </div>
+
+                        {/* FLUJO DE DERECHA A IZQUIERDA (flex-row-reverse en desktop) */}
+                        {direction === 'improper_to_mixed' ? (
+                            <div className="my-auto flex flex-col md:flex-row-reverse items-center justify-around gap-3 py-2">
+                                
+                                {/* PASO 1 (INICIA A LA DERECHA): FRACCIÓN IMPROPIA */}
+                                <div className="animate-slideRTL flex flex-col items-center bg-sky-50 border-2 border-sky-300 rounded-2xl px-4 py-2.5 min-w-[130px]">
+                                    <span className="text-[11px] font-black text-sky-700 uppercase mb-1">1. Fracción</span>
+                                    <div className="text-3xl font-black text-slate-900 flex flex-col items-center leading-none">
+                                        <span>{num}</span>
+                                        <div className="w-10 h-1 bg-slate-900 my-1 rounded-full"></div>
+                                        <span>{den}</span>
+                                    </div>
+                                </div>
+
+                                {/* FLECHA HACIA LA IZQUIERDA */}
+                                {animStep >= 1 && (
+                                    <div className="text-2xl font-black text-amber-500 animate-slideRTL">⬅</div>
+                                )}
+
+                                {/* PASO 2 (CENTRO): DIVISIÓN INEXACTA CON ROLES */}
+                                {animStep >= 1 && (
+                                    <div className="animate-slideRTL flex flex-col items-center bg-amber-50 border-2 border-amber-400 rounded-2xl px-4 py-2.5">
+                                        <span className="text-[11px] font-black text-amber-800 uppercase mb-1">2. Dividimos {num} ÷ {den}</span>
+                                        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-center font-black text-lg">
+                                            <div className="px-2 py-0.5 bg-white rounded-lg border border-slate-300">{num}</div>
+                                            <div className="px-2 py-0.5 bg-rose-100 text-rose-800 rounded-lg border-b-[3px] border-l-[3px] border-slate-800" title="Divisor">
+                                                {den} <span className="block text-[9px] uppercase">Divisor</span>
+                                            </div>
+                                            <div className="px-2 py-0.5 bg-amber-200 text-amber-950 rounded-lg border border-amber-500" title="Residuo">
+                                                ({rem}) <span className="block text-[9px] uppercase">Residuo</span>
+                                            </div>
+                                            <div className="px-2 py-0.5 bg-emerald-200 text-emerald-950 rounded-lg border border-emerald-500" title="Cociente">
+                                                {whole} <span className="block text-[9px] uppercase">Cociente</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* FLECHA HACIA LA IZQUIERDA */}
+                                {animStep >= 2 && (
+                                    <div className="text-2xl font-black text-emerald-600 animate-slideRTL">⬅</div>
+                                )}
+
+                                {/* PASO 3 (TERMINA A LA IZQUIERDA): COCIENTE CRECE, RESIDUO SUBE, DIVISOR BAJA */}
+                                {animStep >= 2 && (
+                                    <div className="animate-slideRTL flex flex-col items-center bg-emerald-50 border-[3px] border-emerald-500 rounded-2xl px-4 py-2.5 shadow-md">
+                                        <span className="text-[11px] font-black text-emerald-800 uppercase mb-1">3. ¡Número Mixto!</span>
+                                        <div className="flex items-center gap-2">
+                                            <div className="animate-growWhole text-4xl font-black text-emerald-700 bg-emerald-200/80 px-2.5 py-1 rounded-xl border border-emerald-400">
+                                                {whole}
+                                            </div>
+                                            <div className="flex flex-col items-center leading-none font-black text-xl">
+                                                <span className="animate-riseUp text-amber-700 bg-amber-200 px-2 py-0.5 rounded-md">
+                                                    {rem} ↑
+                                                </span>
+                                                <div className="w-10 h-1 bg-slate-900 my-1 rounded-full"></div>
+                                                <span className="animate-dropDown text-rose-700 bg-rose-200 px-2 py-0.5 rounded-md">
+                                                    {den} ↓
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="text-[10px] font-extrabold text-slate-600 mt-1 text-center">
+                                            Cociente crece • Residuo sube • Divisor baja
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            /* MIXTO A IMPROPIA DE DERECHA A IZQUIERDA */
+                            <div className="my-auto flex flex-col md:flex-row-reverse items-center justify-around gap-3 py-2">
+                                
+                                {/* PASO 1 (DERECHA): NÚMERO MIXTO */}
+                                <div className="animate-slideRTL flex flex-col items-center bg-orange-50 border-2 border-orange-300 rounded-2xl px-4 py-2.5 min-w-[135px]">
+                                    <span className="text-[11px] font-black text-orange-800 uppercase mb-1">1. Número Mixto</span>
+                                    <div className="flex items-center gap-2 font-black">
+                                        <span className="text-4xl text-orange-600">{whole}</span>
+                                        <div className="flex flex-col items-center text-xl leading-none">
+                                            <span className="text-emerald-700">{rem}</span>
+                                            <div className="w-8 h-1 bg-slate-900 my-1 rounded-full"></div>
+                                            <span className="text-indigo-700">{den}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {animStep >= 1 && <div className="text-2xl font-black text-indigo-500 animate-slideRTL">⬅</div>}
+
+                                {/* PASO 2 (CENTRO): ENTERO MULTIPLICA DENOMINADOR Y SUMA NUMERADOR */}
+                                {animStep >= 1 && (
+                                    <div className="animate-slideRTL flex flex-col items-center bg-indigo-50 border-2 border-indigo-400 rounded-2xl px-4 py-2.5">
+                                        <span className="text-[11px] font-black text-indigo-800 uppercase mb-1">2. Multiplica (×) y Suma (+)</span>
+                                        <div className="text-base sm:text-lg font-black text-slate-900 flex items-center gap-1.5">
+                                            <span className="px-2 py-0.5 rounded-lg bg-orange-200 text-orange-900">({whole} × {den})</span>
+                                            <span>+</span>
+                                            <span className="px-2 py-0.5 rounded-lg bg-emerald-200 text-emerald-900">{rem}</span>
+                                            <span>=</span>
+                                            <span className="px-2.5 py-0.5 rounded-lg bg-yellow-300 text-slate-950">{num}</span>
+                                        </div>
+                                        <span className="text-[10px] font-bold text-slate-600 mt-1">
+                                            Entero × Denominador + Numerador
+                                        </span>
+                                    </div>
+                                )}
+
+                                {animStep >= 2 && <div className="text-2xl font-black text-emerald-600 animate-slideRTL">⬅</div>}
+
+                                {/* PASO 3 (IZQUIERDA): FRACCIÓN IMPROPIA RESULTANTE */}
+                                {animStep >= 2 && (
+                                    <div className="animate-slideRTL flex flex-col items-center bg-emerald-50 border-[3px] border-emerald-500 rounded-2xl px-5 py-2.5 shadow-md">
+                                        <span className="text-[11px] font-black text-emerald-800 uppercase mb-1">3. Fracción Impropia</span>
+                                        <div className="flex flex-col items-center leading-none font-black text-2xl">
+                                            <span className="animate-riseUp text-emerald-800 bg-emerald-200 px-3 py-0.5 rounded-lg">{num}</span>
+                                            <div className="w-12 h-1 bg-slate-900 my-1 rounded-full"></div>
+                                            <span className="text-indigo-800">{den}</span>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {animStep < 2 && (
+                            <button
+                                type="button"
+                                onClick={onNextAnimStep}
+                                className="self-center px-5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-black text-xs sm:text-sm shadow-md hover:brightness-110 active:scale-95 transition-all"
+                            >
+                                ◀ Avanzar operación hacia la izquierda (Paso {animStep + 2}/3)
+                            </button>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- BLOQUE 3: TRAZAR LÍNEAS DE CORTE (÷2, ÷3, ÷4) Y PINTAR EQUIVALENTES ---
+        const Block3Visual = ({ exercise, cutsDone, onMakeCut, targetCells, onToggleTargetCell, onResetBlock3 }) => {
+            const {
+                baseCols, baseRows, basePaintedCols, basePaintedRows,
+                targetCols, targetRows, cutOrientation, cutCount,
+                baseColor, targetColor, baseLatex
+            } = exercise;
+
+            const isCutComplete = cutsDone >= cutCount;
+            const currentRows = cutOrientation === 'horizontal' ? (1 + cutsDone) : baseRows;
+            const currentCols = cutOrientation === 'vertical' ? (1 + cutsDone) : baseCols;
+            const totalParts = currentRows * currentCols;
+            const paintedCount = targetCells.slice(0, totalParts).filter(Boolean).length;
+
+            const isBaseCellPainted = (r, c) => {
+                if (basePaintedCols !== undefined) return c < basePaintedCols;
+                if (basePaintedRows !== undefined) return r < basePaintedRows;
+                return false;
+            };
+
+            return (
+                <div className="w-full h-full flex flex-col items-center justify-center gap-3 p-2">
+                    <div className="w-full max-w-2xl flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
+                        <div className="flex items-center gap-2">
+                            <span className={`px-2.5 py-1 rounded-lg text-xs font-black ${isCutComplete ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-200 text-amber-900 animate-pulse'}`}>
+                                {isCutComplete ? `1. ¡${cutCount} corte(s) listos! ✓` : `1. Traza corte ${cutsDone + 1} de ${cutCount}`}
+                            </span>
+                            <span className={`px-2.5 py-1 rounded-lg text-xs font-black ${isCutComplete ? 'bg-pink-100 text-pink-800' : 'bg-slate-200 text-slate-500'}`}>
+                                2. Pinta el mismo tamaño ({paintedCount}/{totalParts})
+                            </span>
+                        </div>
+                        <button
+                            onClick={onResetBlock3}
+                            className="px-2.5 py-1 text-xs font-black bg-white text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50 active:scale-95"
+                        >
+                            ↺ Reiniciar trazo
+                        </button>
+                    </div>
+
+                    <div className="w-full max-w-2xl p-4 sm:p-6 rounded-[1.8rem] border-[3.5px] border-dashed border-emerald-500 bg-white shadow-inner flex flex-col sm:flex-row items-center justify-around gap-4">
+                        
+                        {/* GRÁFICO IZQUIERDO */}
+                        <div className="flex flex-col items-center gap-2.5">
+                            <div
+                                className="grid rounded-2xl border-[4px] border-slate-800 overflow-hidden shadow-md bg-slate-200"
+                                style={{
+                                    width: '184px',
+                                    height: '138px',
+                                    gridTemplateColumns: `repeat(${baseCols}, 1fr)`,
+                                    gridTemplateRows: `repeat(${baseRows}, 1fr)`
+                                }}
+                            >
+                                {Array.from({ length: baseRows * baseCols }).map((_, idx) => {
+                                    const r = Math.floor(idx / baseCols);
+                                    const c = idx % baseCols;
+                                    const lit = isBaseCellPainted(r, c);
+                                    return (
+                                        <div
+                                            key={idx}
+                                            style={{ backgroundColor: lit ? baseColor : '#e5e7eb' }}
+                                            className={`${c < baseCols - 1 ? 'border-r-[3px] border-dashed border-white' : ''} ${r < baseRows - 1 ? 'border-b-[3px] border-dashed border-white' : ''}`}
+                                        />
+                                    );
+                                })}
+                            </div>
+                            <div className="px-4 py-1 rounded-full text-white font-black text-sm shadow-sm" style={{ backgroundColor: baseColor }}>
+                                <MathDisplay inline latex={baseLatex} />
+                            </div>
+                        </div>
+
+                        <div className="w-12 h-12 rounded-full bg-yellow-300 border-[3px] border-amber-500 flex items-center justify-center text-2xl font-black text-amber-900 shadow-md shrink-0">
+                            =
+                        </div>
+
+                        {/* GRÁFICO DERECHO INTERACTIVO */}
+                        <div className="flex flex-col items-center gap-2.5 relative">
+                            <div className="relative">
+                                <div
+                                    className="grid rounded-2xl border-[4px] border-slate-800 overflow-hidden shadow-md bg-slate-200"
+                                    style={{
+                                        width: '184px',
+                                        height: '138px',
+                                        gridTemplateColumns: `repeat(${currentCols}, 1fr)`,
+                                        gridTemplateRows: `repeat(${currentRows}, 1fr)`
+                                    }}
+                                >
+                                    {Array.from({ length: totalParts }).map((_, idx) => {
+                                        const r = Math.floor(idx / currentCols);
+                                        const c = idx % currentCols;
+                                        const isPainted = targetCells[idx];
+                                        return (
+                                            <button
+                                                key={idx}
+                                                type="button"
+                                                onClick={() => onToggleTargetCell(idx)}
+                                                style={{ backgroundColor: isPainted ? targetColor : '#e5e7eb' }}
+                                                className={`transition-colors duration-150 cursor-pointer flex items-center justify-center focus:outline-none ${
+                                                    c < currentCols - 1 ? 'border-r-[2.5px] border-dashed border-white' : ''
+                                                } ${
+                                                    r < currentRows - 1 ? 'border-b-[2.5px] border-dashed border-white' : ''
+                                                }`}
+                                            >
+                                                <span className={`text-[11px] font-black ${isPainted ? 'text-white' : 'text-slate-400'}`}>
+                                                    {isPainted ? '✓' : ''}
+                                                </span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                {!isCutComplete && (
+                                    <button
+                                        type="button"
+                                        onClick={onMakeCut}
+                                        className="absolute inset-0 flex items-center justify-center bg-slate-900/20 hover:bg-slate-900/30 rounded-2xl transition-all group cursor-pointer"
+                                    >
+                                        <span className="px-3 py-1.5 rounded-full bg-yellow-400 text-slate-950 font-black text-xs shadow-lg border-2 border-slate-900 group-hover:scale-110 transition-transform">
+                                            ✂️ Trazar línea {cutOrientation === 'horizontal' ? 'horizontal' : 'vertical'} ({cutsDone + 1}/{cutCount})
+                                        </span>
+                                    </button>
+                                )}
+                            </div>
+
+                            <div className="px-4 py-1 rounded-full text-white font-black text-sm shadow-sm" style={{ backgroundColor: targetColor }}>
+                                {paintedCount} / {totalParts}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="text-xs font-bold text-slate-500 text-center">
+                        💡 Pinta exactamente la misma área sombreada que en el gráfico izquierdo y luego marca su fracción equivalente.
+                    </div>
+                </div>
+            );
+        };
+
+        // =========================================================================
+        // 7. COMPONENTES DECORATIVOS: FONDO FLOTANTE, CELEBRACIÓN +20 PTS Y ROBOT
+        // =========================================================================
+        const FloatingBackground = memo(() => {
+            const symbols = ['17/5', '3⅓', '3/4 = 6/8', '½', '⅓', '20 pts', '✏️', '🎨'];
+            const elements = Array.from({ length: 24 }).map((_, i) => ({
+                id: i,
+                symbol: symbols[i % symbols.length],
+                left: `${(i * 4.1 + 2) % 96}%`,
+                animationDuration: `${12 + (i % 7) * 2.1}s`,
+                animationDelay: `-${(i * 1.3) % 18}s`,
+                fontSize: `${1.15 + (i % 4) * 0.5}rem`,
+                opacity: 0.08 + (i % 3) * 0.03
+            }));
+            return (
+                <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+                    {elements.map((el) => (
+                        <div
+                            key={el.id}
+                            className="absolute text-white font-black animate-floatUp select-none"
+                            style={{
+                                left: el.left,
+                                bottom: '-15%',
+                                fontSize: el.fontSize,
+                                opacity: el.opacity,
+                                animationDuration: el.animationDuration,
+                                animationDelay: el.animationDelay
+                            }}
+                        >
+                            {el.symbol}
+                        </div>
+                    ))}
+                </div>
+            );
+        });
+
+        // Pantalla completa "¡GANASTE 20 PUNTOS!" al acertar
+        const PointsCelebrationOverlay = ({ pointsEarned = 20 }) => {
+            const colors = ['#fde047', '#38bdf8', '#f472b6', '#34d399', '#a78bfa', '#fb923c'];
+            const pieces = Array.from({ length: 90 }).map((_, i) => ({
+                id: i,
+                left: `${50 + (Math.random() * 16 - 8)}%`,
+                color: colors[i % colors.length],
+                tx: `${(Math.random() - 0.5) * 900}px`,
+                ty: `${(Math.random() - 0.5) * 780}px`,
+                rot: `${Math.random() * 720}deg`,
+                delay: `${Math.random() * 0.15}s`
+            }));
+
+            return (
+                <div className="fixed inset-0 z-[200] pointer-events-none flex items-center justify-center bg-slate-950/55 backdrop-blur-xs">
+                    {pieces.map((p) => (
+                        <div
+                            key={p.id}
+                            className="absolute w-4 h-4 rounded-full animate-confettiExplosion"
+                            style={{
+                                backgroundColor: p.color,
+                                '--tx': p.tx,
+                                '--ty': p.ty,
+                                '--rot': p.rot,
+                                animationDelay: p.delay,
+                                left: p.left,
+                                top: '50%'
+                            }}
+                        />
+                    ))}
+                    <div className="animate-pointsZoom bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500 p-6 sm:p-10 rounded-[2.5rem] border-[6px] border-white shadow-[0_25px_70px_rgba(250,204,21,0.7)] text-center max-w-lg mx-4">
+                        <div className="text-5xl sm:text-7xl mb-2">🏆🎉</div>
+                        <div className="text-3xl sm:text-5xl font-black text-slate-950 tracking-tight uppercase drop-shadow-sm">
+                            ¡GANASTE {pointsEarned} PUNTOS!
+                        </div>
+                        <div className="mt-2 text-sm sm:text-lg font-extrabold text-amber-950">
+                            ¡Excelente razonamiento matemático!
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const RobotAssistant = ({ mood }) => {
+            const isHappy = mood === 'correct';
+            return (
+                <div className={`relative flex flex-col items-center drop-shadow-xl select-none ${isHappy ? 'animate-robotJump' : 'animate-robotFloat'}`}>
+                    <div className="relative z-0 flex flex-col items-center translate-y-1">
+                        <div className={`w-2.5 h-2.5 rounded-full shadow-[0_0_10px_currentColor] z-10 ${isHappy ? 'text-emerald-400 bg-emerald-400' : 'text-yellow-400 bg-yellow-400 animate-pulse'}`}></div>
+                        <div className="w-1.5 h-3 bg-slate-300"></div>
+                    </div>
+                    <div className="relative z-10 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-white to-slate-200 rounded-xl border-[2.5px] border-indigo-400 shadow-xl flex flex-col items-center justify-center p-1">
+                        <div className="w-full h-full bg-slate-900 rounded-lg flex flex-col items-center justify-center p-1 shadow-inner border-[1.5px] border-indigo-500">
+                            <div className="w-full flex justify-between px-1">
+                                <div className={`w-2.5 h-2 rounded-full ${isHappy ? 'bg-emerald-400' : 'bg-cyan-400 animate-pulse'}`}></div>
+                                <div className={`w-2.5 h-2 rounded-full ${isHappy ? 'bg-emerald-400' : 'bg-cyan-400 animate-pulse'}`}></div>
+                            </div>
+                            <div className={`w-3.5 h-1.5 rounded-b-full mt-1.5 ${isHappy ? 'bg-emerald-400' : 'bg-cyan-300'}`}></div>
+                        </div>
+                    </div>
+                    <div className={`absolute top-1/2 -left-1.5 w-2 h-4 bg-slate-200 border-[2px] border-indigo-400 rounded-full z-0 origin-top ${isHappy ? 'animate-robotTalkArmL' : 'rotate-45'}`}></div>
+                    <div className={`absolute top-1/2 -right-1.5 w-2 h-4 bg-slate-200 border-[2px] border-indigo-400 rounded-full z-0 origin-top ${isHappy ? 'animate-robotTalkArmR' : '-rotate-45'}`}></div>
+                </div>
+            );
+        };
+
+        // =========================================================================
+        // 8. APLICACIÓN PRINCIPAL
+        // =========================================================================
+        function App() {
+            const [view, setView] = useState('home'); // 'home' | 'lab' | 'summary'
+            const [blockIdx, setBlockIdx] = useState(0);
+            const [exIdx, setExIdx] = useState(0);
+            const [score, setScore] = useState(0);
+            const [blockScores, setBlockScores] = useState([0, 0, 0]);
+            const [completedMap, setCompletedMap] = useState({});
+            const [isMuted, setIsMuted] = useState(false);
+
+            // Estado de respuesta y celebración
+            const [selectedOpt, setSelectedOpt] = useState(null);
+            const [answerStatus, setAnswerStatus] = useState(null); // null | 'correct' | 'wrong'
+            const [showCelebration, setShowCelebration] = useState(false);
+
+            // Estados interactivos por bloque
+            // Bloque 1: 3 gráficos para pintar y vincular con 4 fracciones
+            const [b1CellsByGraph, setB1CellsByGraph] = useState([[], [], []]);
+            const [b1SelectedGraph, setB1SelectedGraph] = useState(null);
+            const [b1Links, setB1Links] = useState({});
+
+            // Bloque 2: paso de animación (0, 1, 2)
+            const [b2AnimStep, setB2AnimStep] = useState(0);
+
+            // Bloque 3: cortes y celdas pintadas
+            const [b3Cuts, setB3Cuts] = useState(0);
+            const [b3Cells, setB3Cells] = useState([]);
+
+            const curBlock = BLOCKS[blockIdx];
+            const curEx = curBlock.exercises[exIdx];
+
+            // Inicializar estado interactivo al cambiar de ejercicio
+            useEffect(() => {
+                setSelectedOpt(null);
+                setAnswerStatus(null);
+                setShowCelebration(false);
+
+                if (blockIdx === 0) {
+                    setB1CellsByGraph(
+                        curEx.graphs.map(g => Array(g.boxes * g.partsPerBox).fill(false))
+                    );
+                    setB1SelectedGraph(null);
+                    setB1Links({});
+                } else if (blockIdx === 1) {
+                    setB2AnimStep(0);
+                } else if (blockIdx === 2) {
+                    setB3Cuts(0);
+                    const maxCells = curEx.targetCols * curEx.targetRows;
+                    const initialBaseTotal = curEx.baseCols * curEx.baseRows;
+                    const initArr = Array(maxCells).fill(false);
+                    for (let i = 0; i < initialBaseTotal; i++) {
+                        const r = Math.floor(i / curEx.baseCols);
+                        const c = i % curEx.baseCols;
+                        if (curEx.basePaintedCols !== undefined && c < curEx.basePaintedCols) initArr[i] = true;
+                        if (curEx.basePaintedRows !== undefined && r < curEx.basePaintedRows) initArr[i] = true;
+                    }
+                    setB3Cells(initArr);
+                }
+            }, [blockIdx, exIdx]);
+
+            const handleInteraction = () => {
+                AudioController.init();
+                AudioController.startBGM();
+            };
+
+            const startBlock = (bIndex) => {
+                handleInteraction();
+                AudioController.play('swoosh');
+                setBlockIdx(bIndex);
+                setExIdx(0);
+                setView('lab');
+            };
+
+            const registerResult = (isCorrect) => {
+                const key = `${blockIdx}-${exIdx}`;
+                if (isCorrect) {
+                    setAnswerStatus('correct');
+                    AudioController.play('success');
+                    if (!completedMap[key]) {
+                        setScore(s => s + 20);
+                        setBlockScores(prev => {
+                            const copy = [...prev];
+                            copy[blockIdx] += 20;
+                            return copy;
+                        });
+                        setCompletedMap(prev => ({ ...prev, [key]: 'correct' }));
+                    }
+                    setShowCelebration(true);
+                    setTimeout(() => setShowCelebration(false), 1850);
+                } else {
+                    setAnswerStatus('wrong');
+                    AudioController.play('wrong');
+                    if (!completedMap[key]) {
+                        setCompletedMap(prev => ({ ...prev, [key]: 'wrong' }));
+                    }
+                }
+            };
+
+            const handleSelectOption = (optIndex) => {
+                if (answerStatus !== null) return;
+                handleInteraction();
+                setSelectedOpt(optIndex);
+                const chosen = curEx.options[optIndex];
+                registerResult(chosen.correct);
+            };
+
+            // Verificación específica para Bloque 1 (3 gráficos pintados y vinculados)
+            const handleVerifyBlock1 = () => {
+                if (answerStatus !== null) return;
+                handleInteraction();
+                const allCorrect = curEx.graphs.every((g, gIdx) => {
+                    const painted = (b1CellsByGraph[gIdx] || []).filter(Boolean).length;
+                    const linkedFrac = b1Links[gIdx];
+                    return painted === g.targetPainted && linkedFrac === g.targetFracId;
+                });
+                registerResult(allCorrect);
+            };
+
+            const handleNextExercise = () => {
+                handleInteraction();
+                AudioController.play('swoosh');
+                setShowCelebration(false);
+                if (exIdx < curBlock.exercises.length - 1) {
+                    setExIdx(exIdx + 1);
+                } else {
+                    setView('summary');
+                }
+            };
+
+            const toggleMute = () => {
+                handleInteraction();
+                setIsMuted(AudioController.toggleMute());
+            };
+
+            // ------------------------- VISTA PORTADA -------------------------
+            if (view === 'home') {
+                return (
+                    <div className="w-screen h-[100dvh] bg-gradient-to-br from-[#1e3a8a] via-[#4338ca] to-[#be185d] flex flex-col items-center justify-start p-4 sm:p-6 relative font-fun overflow-y-auto scrollbar-hide">
+                        <FloatingBackground />
+
+                        {/* Barra superior */}
+                        <div className="w-[96%] max-w-[1380px] z-20 flex items-center justify-between mb-6 mt-1">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl border-2 border-yellow-300 bg-white/15 backdrop-blur-md text-yellow-300 font-black tracking-wider uppercase shadow-md text-xs sm:text-base">
+                                <Rocket className="w-5 h-5 text-yellow-300" /> TuProfe20 Lab
+                            </div>
+                            <div className="flex items-center gap-2.5">
+                                <div className="px-4 py-2 rounded-2xl bg-yellow-400 text-slate-950 font-black text-xs sm:text-base shadow-md flex items-center gap-1.5">
+                                    <Trophy className="w-4 h-4 sm:w-5 sm:h-5" /> Puntaje Total: {score} pts
+                                </div>
+                                <button onClick={toggleMute} title="Audio" className="p-2.5 rounded-2xl bg-white/20 border-2 border-white/30 backdrop-blur-md text-white hover:bg-white/30 transition-all active:scale-95">
+                                    {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Títulos de portada */}
+                        <div className="relative z-10 text-center w-[96%] max-w-[1380px] flex flex-col items-center pb-10">
+                            <span className="px-5 py-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 font-black uppercase tracking-widest text-xs sm:text-sm mb-3 shadow-lg">
+                                Laboratorio Interactivo • 3 Bloques • 15 Retos
+                            </span>
+                            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white mb-4 drop-shadow-[0_6px_0_rgba(0,0,0,0.3)] tracking-tight leading-tight uppercase">
+                                TuProfe20 Lab:<br />
+                                <span className="text-yellow-300 underline decoration-wavy decoration-cyan-400 underline-offset-8">
+                                    Fracciones Impropias y Equivalentes
+                                </span>
+                            </h1>
+                            <p className="text-sm sm:text-lg text-purple-100 mb-8 font-bold max-w-3xl leading-relaxed">
+                                ¡Traza cortes, pinta fracciones, convierte paso a paso y gana <strong>+20 puntos</strong> por cada ejercicio resuelto! 🎯🎨✂️
+                            </p>
+
+                            {/* 3 Tarjetas de Bloques */}
+                            <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-7">
+                                {BLOCKS.map((blk, idx) => (
+                                    <button
+                                        key={blk.id}
+                                        onClick={() => startBlock(idx)}
+                                        className="group text-left p-6 rounded-[2rem] bg-white/12 backdrop-blur-xl border-[3.5px] border-white/35 hover:border-yellow-300 hover:-translate-y-2 hover:shadow-[0_20px_35px_rgba(0,0,0,0.4)] transition-all flex flex-col justify-between relative overflow-hidden shadow-xl min-h-[16rem]"
+                                    >
+                                        <div className={`absolute inset-0 bg-gradient-to-br ${blk.colorFrom} ${blk.colorTo} opacity-85 group-hover:opacity-100 transition-opacity`}></div>
+                                        <div className="relative z-10 flex flex-col h-full justify-between">
+                                            <div className="flex items-center justify-between mb-3">
+                                                <span className="bg-white text-slate-900 text-xs font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                                    {blk.title} • 5 Retos
+                                                </span>
+                                                <span className="text-3xl">{blk.icon}</span>
+                                            </div>
+                                            <div>
+                                                <h2 className="text-2xl sm:text-3xl font-black text-white mb-2 drop-shadow-md">
+                                                    {blk.name}
+                                                </h2>
+                                                <p className="text-white/95 text-sm sm:text-base font-bold leading-snug">
+                                                    {blk.shortDesc}
+                                                </p>
+                                            </div>
+                                            <div className="mt-5 pt-3 border-t border-white/25 flex items-center justify-between">
+                                                <span className="text-yellow-300 font-black text-sm">
+                                                    Puntos bloque: {blockScores[idx]} / 100
+                                                </span>
+                                                <span className="px-3.5 py-1.5 rounded-xl bg-yellow-400 text-slate-950 font-black text-xs uppercase group-hover:scale-105 transition-transform">
+                                                    ¡Comenzar! →
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ------------------------- VISTA RESUMEN DE BLOQUE -------------------------
+            if (view === 'summary') {
+                return (
+                    <div className="w-screen h-[100dvh] bg-gradient-to-br from-[#0f172a] via-[#312e81] to-[#831843] flex flex-col items-center justify-center p-4 relative font-fun overflow-hidden">
+                        <FloatingBackground />
+                        <div className="relative z-10 bg-white rounded-[2.2rem] border-[6px] border-yellow-400 p-6 sm:p-10 max-w-xl w-full text-center shadow-2xl animate-jellyPop">
+                            <div className="text-6xl mb-3">🏅</div>
+                            <span className="px-4 py-1 rounded-full bg-indigo-100 text-indigo-800 font-black text-xs uppercase tracking-widest">
+                                ¡{curBlock.title} Completado!
+                            </span>
+                            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-2 mb-2">
+                                {curBlock.name}
+                            </h2>
+                            <p className="text-slate-600 font-bold text-sm sm:text-base mb-6">
+                                Completaste los 5 ejercicios interactivos de este bloque.
+                            </p>
+
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <div className="bg-amber-50 border-2 border-amber-300 rounded-2xl p-4">
+                                    <div className="text-xs font-black text-amber-700 uppercase">Puntos del Bloque</div>
+                                    <div className="text-3xl font-black text-amber-600 mt-1">{blockScores[blockIdx]} / 100</div>
+                                </div>
+                                <div className="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-4">
+                                    <div className="text-xs font-black text-emerald-700 uppercase">Puntaje Global</div>
+                                    <div className="text-3xl font-black text-emerald-600 mt-1">{score} pts</div>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                                <button
+                                    onClick={() => setView('home')}
+                                    className="px-5 py-3 rounded-xl bg-slate-200 text-slate-800 font-black text-sm hover:bg-slate-300 transition-all"
+                                >
+                                    🏠 Ir a la Portada
+                                </button>
+                                {blockIdx < BLOCKS.length - 1 && (
+                                    <button
+                                        onClick={() => startBlock(blockIdx + 1)}
+                                        className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-black text-sm shadow-lg hover:brightness-110 transition-all"
+                                    >
+                                        Ir al {BLOCKS[blockIdx + 1].title} →
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+
+            // ------------------------- VISTA LABORATORIO ACTIVO -------------------------
+            const robotMessage = answerStatus === 'correct'
+                ? "¡Excelente! +20 puntos directos a tu marcador. Pulsa 'Siguiente Ejercicio' para continuar."
+                : answerStatus === 'wrong'
+                    ? `¡Buen intento! ${curEx.explanation || "Revisa la explicación y avanza al siguiente reto."}`
+                    : blockIdx === 0
+                        ? "Primero pinta cada uno de los 3 gráficos según la fracción que le corresponde, luego únelos con las 4 opciones de la derecha."
+                        : blockIdx === 1
+                            ? "Observa el gráfico central y avanza los pasos de derecha a izquierda para ver cómo se transforma la fracción."
+                            : "Primero traza las líneas de corte en el gráfico derecho, luego pinta el mismo tamaño y marca la fracción equivalente.";
+
+            return (
+                <div className="w-screen h-[100dvh] bg-gradient-to-br from-[#0f172a] via-[#312e81] to-[#831843] text-slate-800 flex flex-col p-2 sm:p-3.5 relative font-fun overflow-hidden">
+                    <FloatingBackground />
+                    {showCelebration && <PointsCelebrationOverlay pointsEarned={20} />}
+
+                    {/* Barra superior */}
+                    <div className="shrink-0 relative z-10 w-[98%] max-w-[1440px] mx-auto flex justify-between items-center mb-2 px-1 gap-2">
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => { AudioController.play('swoosh'); setView('home'); }}
+                                className="flex items-center justify-center px-3 py-2 rounded-xl bg-white/10 border-2 border-white/30 backdrop-blur-md text-white font-black hover:bg-white/20 transition-all text-xs sm:text-sm"
+                            >
+                                <Home className="w-4 h-4 sm:mr-1.5" />
+                                <span className="hidden sm:inline">Portada</span>
+                            </button>
+                            <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-cyan-400/40 text-cyan-300 font-black text-xs uppercase">
+                                {curBlock.title}: {curBlock.name}
+                            </span>
+                        </div>
+
+                        {/* Indicador de los 5 ejercicios del bloque */}
+                        <div className="flex items-center gap-1.5 bg-black/35 p-1.5 rounded-xl border-2 border-white/20 backdrop-blur-md">
+                            {curBlock.exercises.map((item, i) => {
+                                const status = completedMap[`${blockIdx}-${i}`];
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className={`w-8 h-8 sm:w-9 sm:h-9 rounded-lg font-black text-xs sm:text-sm flex items-center justify-center transition-all ${
+                                            exIdx === i
+                                                ? 'bg-yellow-400 text-slate-950 scale-110 shadow-md'
+                                                : status === 'correct'
+                                                    ? 'bg-emerald-500 text-white'
+                                                    : status === 'wrong'
+                                                        ? 'bg-rose-500 text-white'
+                                                        : 'bg-white/10 text-white/75'
+                                        }`}
+                                    >
+                                        {i + 1}
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                            <div className="px-3.5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-md flex items-center gap-1.5">
+                                <Trophy className="w-4 h-4" /> {score} pts
+                            </div>
+                            <button onClick={toggleMute} className="p-2 rounded-xl bg-white/10 border-2 border-white/30 text-white hover:bg-white/20">
+                                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Pizarra Principal */}
+                    <div className="flex-1 min-h-0 relative z-10 w-[98%] max-w-[1440px] mx-auto bg-white rounded-[1.8rem] sm:rounded-[2.2rem] border-[5px] border-slate-100 shadow-2xl flex flex-col overflow-hidden">
+                        
+                        {/* Enunciado superior */}
+                        <div className="shrink-0 bg-slate-900 border-b-[4px] border-cyan-500 px-4 py-2.5 sm:px-6 sm:py-3 flex flex-col justify-center relative z-20">
+                            <div className="flex justify-between items-center w-full max-w-6xl mx-auto mb-1">
+                                <span className="bg-cyan-400 text-slate-950 font-black text-xs px-3 py-0.5 rounded-md uppercase tracking-wider">
+                                    {curBlock.title} • Ejercicio {exIdx + 1} de 5
+                                </span>
+                                <span className="text-yellow-300 font-extrabold text-xs bg-white/10 px-3 py-0.5 rounded-md">
+                                    Valor: +20 puntos
+                                </span>
+                            </div>
+                            <div className="text-white font-bold text-sm sm:text-lg text-center w-full max-w-5xl mx-auto leading-snug">
+                                {curEx.prompt}
+                            </div>
+                        </div>
+
+                        {/* Área interactiva central */}
+                        {blockIdx === 0 ? (
+                            /* BLOQUE 1: ZONA DE TRABAJO COMPLETA (3 GRÁFICOS + 4 FRACCIONES) */
+                            <div className="flex-1 min-h-0 flex flex-col bg-slate-50 overflow-y-auto relative z-10">
+                                <Block1MatchVisual
+                                    exercise={curEx}
+                                    cellsByGraph={b1CellsByGraph}
+                                    onToggleCell={(gIdx, cIdx) => {
+                                        handleInteraction();
+                                        AudioController.play('pop');
+                                        setB1CellsByGraph(prev =>
+                                            prev.map((arr, idx) =>
+                                                idx === gIdx ? arr.map((v, i) => (i === cIdx ? !v : v)) : arr
+                                            )
+                                        );
+                                    }}
+                                    selectedGraphIdx={b1SelectedGraph}
+                                    onSelectGraph={(gIdx) => {
+                                        handleInteraction();
+                                        AudioController.play('pop');
+                                        setB1SelectedGraph(prev => (prev === gIdx ? null : gIdx));
+                                    }}
+                                    links={b1Links}
+                                    onLinkFraction={(fracId) => {
+                                        if (b1SelectedGraph === null) return;
+                                        handleInteraction();
+                                        AudioController.play('cut');
+                                        setB1Links(prev => {
+                                            const updated = { ...prev };
+                                            // Si esta fracción ya estaba asignada a otro gráfico, la liberamos
+                                            Object.keys(updated).forEach(k => {
+                                                if (updated[k] === fracId) delete updated[k];
+                                            });
+                                            updated[b1SelectedGraph] = fracId;
+                                            return updated;
+                                        });
+                                        setB1SelectedGraph(null);
+                                    }}
+                                    checkedStatus={answerStatus}
+                                    onVerifyMatch={handleVerifyBlock1}
+                                    onResetExercise={() => {
+                                        handleInteraction();
+                                        AudioController.play('swoosh');
+                                        setB1CellsByGraph(curEx.graphs.map(g => Array(g.boxes * g.partsPerBox).fill(false)));
+                                        setB1SelectedGraph(null);
+                                        setB1Links({});
+                                    }}
+                                />
+
+                                {answerStatus !== null && (
+                                    <div className="px-4 pb-3 flex justify-center">
+                                        <div className={`p-3 rounded-2xl border-2 text-center animate-slideInRight max-w-2xl w-full flex flex-col sm:flex-row items-center justify-between gap-3 ${
+                                            answerStatus === 'correct'
+                                                ? 'bg-emerald-50 border-emerald-400 text-emerald-900'
+                                                : 'bg-amber-50 border-amber-400 text-amber-950'
+                                        }`}>
+                                            <div className="text-left">
+                                                <div className="font-black text-sm">
+                                                    {answerStatus === 'correct'
+                                                        ? '🎉 ¡Todo pintado y relacionado correctamente! +20 puntos'
+                                                        : '💡 ¡Buen intento! Revisa las marcas verdes/rojas y avanza (0 pts)'}
+                                                </div>
+                                                <p className="text-xs font-bold opacity-90">{curEx.explanation}</p>
+                                            </div>
+                                            <button
+                                                onClick={handleNextExercise}
+                                                className="shrink-0 py-2.5 px-5 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-black text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-2"
+                                            >
+                                                <span>{exIdx < 4 ? 'Siguiente Ejercicio' : `Finalizar ${curBlock.title}`}</span>
+                                                <ArrowRight className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+
+                                <DrawingCanvas />
+                            </div>
+                        ) : (
+                            /* BLOQUES 2 Y 3: LABORATORIO VISUAL + OPCIONES DE RESPUESTA */
+                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row bg-slate-50 overflow-y-auto lg:overflow-hidden relative">
+                                
+                                <div className="w-full lg:w-[60%] flex-1 p-3 sm:p-5 flex items-center justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-slate-200 relative z-10">
+                                    {blockIdx === 1 && (
+                                        <Block2AnimatedVisual
+                                            exercise={curEx}
+                                            animStep={b2AnimStep}
+                                            onNextAnimStep={() => {
+                                                handleInteraction();
+                                                AudioController.play('pop');
+                                                setB2AnimStep(s => Math.min(2, s + 1));
+                                            }}
+                                            onReplayAnim={() => {
+                                                handleInteraction();
+                                                AudioController.play('swoosh');
+                                                setB2AnimStep(0);
+                                            }}
+                                        />
+                                    )}
+
+                                    {blockIdx === 2 && (
+                                        <Block3Visual
+                                            exercise={curEx}
+                                            cutsDone={b3Cuts}
+                                            onMakeCut={() => {
+                                                handleInteraction();
+                                                AudioController.play('cut');
+                                                const nextCuts = Math.min(curEx.cutCount, b3Cuts + 1);
+                                                setB3Cuts(nextCuts);
+                                                if (nextCuts === curEx.cutCount) {
+                                                    setB3Cells(Array(curEx.targetCols * curEx.targetRows).fill(false));
+                                                }
+                                            }}
+                                            targetCells={b3Cells}
+                                            onToggleTargetCell={(idx) => {
+                                                if (b3Cuts < curEx.cutCount) return;
+                                                handleInteraction();
+                                                AudioController.play('pop');
+                                                setB3Cells(prev => prev.map((v, i) => i === idx ? !v : v));
+                                            }}
+                                            onResetBlock3={() => {
+                                                handleInteraction();
+                                                AudioController.play('swoosh');
+                                                setB3Cuts(0);
+                                                const maxCells = curEx.targetCols * curEx.targetRows;
+                                                const initialBaseTotal = curEx.baseCols * curEx.baseRows;
+                                                const initArr = Array(maxCells).fill(false);
+                                                for (let i = 0; i < initialBaseTotal; i++) {
+                                                    const r = Math.floor(i / curEx.baseCols);
+                                                    const c = i % curEx.baseCols;
+                                                    if (curEx.basePaintedCols !== undefined && c < curEx.basePaintedCols) initArr[i] = true;
+                                                    if (curEx.basePaintedRows !== undefined && r < curEx.basePaintedRows) initArr[i] = true;
+                                                }
+                                                setB3Cells(initArr);
+                                            }}
+                                        />
+                                    )}
+                                </div>
+
+                                <div className="w-full lg:w-[40%] p-4 sm:p-6 flex flex-col justify-center gap-4 bg-white relative z-10">
+                                    <div className="text-xs font-black uppercase tracking-widest text-indigo-600 text-center">
+                                        Selecciona tu respuesta:
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto w-full">
+                                        {curEx.options.map((opt, idx) => {
+                                            const letters = ['A', 'B', 'C', 'D'];
+                                            const isChosen = selectedOpt === idx;
+                                            let cardStyle = "bg-slate-50 border-slate-300 text-slate-900 hover:border-indigo-500 hover:bg-indigo-50";
+
+                                            if (answerStatus !== null) {
+                                                if (opt.correct) {
+                                                    cardStyle = "bg-emerald-100 border-emerald-500 text-emerald-950 scale-[1.03] shadow-md";
+                                                } else if (isChosen && !opt.correct) {
+                                                    cardStyle = "bg-rose-100 border-rose-500 text-rose-950 opacity-90";
+                                                } else {
+                                                    cardStyle = "bg-slate-50 border-slate-200 text-slate-400 opacity-60";
+                                                }
+                                            }
+
+                                            return (
+                                                <button
+                                                    key={idx}
+                                                    disabled={answerStatus !== null}
+                                                    onClick={() => handleSelectOption(idx)}
+                                                    className={`p-3 sm:p-4 rounded-2xl border-[3px] font-black transition-all flex items-center justify-center gap-2.5 cursor-pointer relative math-option ${cardStyle}`}
+                                                >
+                                                    <span className="w-7 h-7 rounded-lg bg-slate-800 text-white text-xs font-black flex items-center justify-center shrink-0">
+                                                        {letters[idx]}
+                                                    </span>
+                                                    <MathDisplay inline latex={opt.latex} />
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    {answerStatus !== null && (
+                                        <div className={`p-3.5 rounded-2xl border-2 text-center animate-slideInRight max-w-md mx-auto w-full ${
+                                            answerStatus === 'correct'
+                                                ? 'bg-emerald-50 border-emerald-400 text-emerald-900'
+                                                : 'bg-amber-50 border-amber-400 text-amber-950'
+                                        }`}>
+                                            <div className="font-black text-sm sm:text-base mb-1">
+                                                {answerStatus === 'correct'
+                                                    ? '🎉 ¡Respuesta Correcta! +20 puntos'
+                                                    : '💡 ¡No pasa nada! Seguimos avanzando (0 pts)'}
+                                            </div>
+                                            {curEx.explanation && (
+                                                <p className="text-xs font-bold opacity-90 mb-3">{curEx.explanation}</p>
+                                            )}
+                                            <button
+                                                onClick={handleNextExercise}
+                                                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-black text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
+                                            >
+                                                <span>{exIdx < 4 ? 'Siguiente Ejercicio' : `Finalizar ${curBlock.title}`}</span>
+                                                <ArrowRight className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <DrawingCanvas />
+                            </div>
+                        )}
+
+                        {/* Barra inferior del Robot Guía */}
+                        <div className="shrink-0 bg-white w-full px-4 py-2 sm:px-6 sm:py-2.5 flex items-center gap-3 sm:gap-5 border-t-[3px] border-slate-100 z-30 relative">
+                            <div className="shrink-0">
+                                <RobotAssistant mood={answerStatus} />
+                            </div>
+                            <div className="flex-1 text-xs sm:text-sm md:text-base font-bold text-slate-700 leading-snug bg-blue-50/90 px-3.5 py-2 rounded-2xl border-2 border-blue-100 flex items-center">
+                                {robotMessage}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
