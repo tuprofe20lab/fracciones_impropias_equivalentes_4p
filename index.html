@@ -411,7 +411,7 @@
                 id: 1,
                 title: "Bloque 1",
                 name: "Pinta y Relaciona Gráficos",
-                shortDesc: "Pinta los 3 gráficos según las fracciones impropias o mixtas y relaciónalos (4 opciones)",
+                shortDesc: "Pinta los 3 gráficos según las fracciones impropias y relaciónalos (4 opciones)",
                 colorFrom: "from-sky-500",
                 colorTo: "to-blue-700",
                 badgeBg: "bg-sky-500",
@@ -428,10 +428,10 @@
                         fractions: [
                             { id: "f0", latex: String.raw`\dfrac{13}{5}` },
                             { id: "f1", latex: String.raw`\dfrac{9}{4}` },
-                            { id: "f2", latex: String.raw`\dfrac{11}{4}` },
+                            { id: "f2", latex: String.raw`\dfrac{15}{4}` },
                             { id: "f3", latex: String.raw`\dfrac{10}{3}` }
                         ],
-                        explanation: "Gráfico A tiene 9/4 pintados, Gráfico B tiene 10/3 pintados y Gráfico C tiene 13/5 pintados (11/4 era el distractor)."
+                        explanation: "Gráfico A tiene 9/4 pintados, Gráfico B tiene 10/3 pintados y Gráfico C tiene 13/5 pintados (15/4 era el distractor)."
                     },
                     {
                         id: "1-2",
@@ -451,19 +451,19 @@
                     },
                     {
                         id: "1-3",
-                        prompt: "Ahora pinta los 3 gráficos y vincúlalos con su número mixto correspondiente (sobra 1):",
+                        prompt: "Pinta los 3 gráficos y vincúlalos con su fracción impropia (sobra 1):",
                         graphs: [
                             { id: "g0", label: "Gráfico A", boxes: 4, partsPerBox: 3, targetPainted: 10, targetFracId: "f1", color: "#f97316" },
                             { id: "g1", label: "Gráfico B", boxes: 3, partsPerBox: 4, targetPainted: 9, targetFracId: "f3", color: "#10b981" },
                             { id: "g2", label: "Gráfico C", boxes: 3, partsPerBox: 6, targetPainted: 15, targetFracId: "f0", color: "#6366f1" }
                         ],
                         fractions: [
-                            { id: "f0", latex: String.raw`2\dfrac{3}{6}` },
-                            { id: "f1", latex: String.raw`3\dfrac{1}{3}` },
-                            { id: "f2", latex: String.raw`3\dfrac{2}{3}` },
-                            { id: "f3", latex: String.raw`2\dfrac{1}{4}` }
+                            { id: "f0", latex: String.raw`\dfrac{15}{6}` },
+                            { id: "f1", latex: String.raw`\dfrac{10}{3}` },
+                            { id: "f2", latex: String.raw`\dfrac{14}{3}` },
+                            { id: "f3", latex: String.raw`\dfrac{9}{4}` }
                         ],
-                        explanation: "Gráfico A = 3 enteros y 1/3 (3 1/3), Gráfico B = 2 enteros y 1/4 (2 1/4), Gráfico C = 2 enteros y 3/6 (2 3/6)."
+                        explanation: "Gráfico A = 10/3, Gráfico B = 9/4 y Gráfico C = 15/6. El 14/3 necesita más unidades de las que hay."
                     },
                     {
                         id: "1-4",
@@ -475,27 +475,27 @@
                         ],
                         fractions: [
                             { id: "f0", latex: String.raw`\dfrac{8}{3}` },
-                            { id: "f1", latex: String.raw`\dfrac{14}{6}` },
+                            { id: "f1", latex: String.raw`\dfrac{20}{6}` },
                             { id: "f2", latex: String.raw`\dfrac{14}{6}` },
                             { id: "f3", latex: String.raw`\dfrac{9}{2}` }
-                        ].map((item, idx) => idx === 1 ? { id: "f1", latex: String.raw`\dfrac{9}{5}` } : item),
+                        ],
                         explanation: "Gráfico A tiene 14/6 pintados, Gráfico B tiene 9/2 pintados y Gráfico C tiene 8/3 pintados."
                     },
                     {
                         id: "1-5",
-                        prompt: "¡Reto final del Bloque 1! Pinta los 3 gráficos y relaciona cada uno con su número mixto:",
+                        prompt: "¡Reto final del Bloque 1! Pinta los 3 gráficos y relaciona cada uno con su fracción impropia:",
                         graphs: [
                             { id: "g0", label: "Gráfico A", boxes: 4, partsPerBox: 4, targetPainted: 15, targetFracId: "f3", color: "#3b82f6" },
                             { id: "g1", label: "Gráfico B", boxes: 3, partsPerBox: 5, targetPainted: 12, targetFracId: "f0", color: "#ec4899" },
                             { id: "g2", label: "Gráfico C", boxes: 4, partsPerBox: 2, targetPainted: 7, targetFracId: "f2", color: "#10b981" }
                         ],
                         fractions: [
-                            { id: "f0", latex: String.raw`2\dfrac{2}{5}` },
-                            { id: "f1", latex: String.raw`4\dfrac{1}{4}` },
-                            { id: "f2", latex: String.raw`3\dfrac{1}{2}` },
-                            { id: "f3", latex: String.raw`3\dfrac{3}{4}` }
+                            { id: "f0", latex: String.raw`\dfrac{12}{5}` },
+                            { id: "f1", latex: String.raw`\dfrac{17}{4}` },
+                            { id: "f2", latex: String.raw`\dfrac{7}{2}` },
+                            { id: "f3", latex: String.raw`\dfrac{15}{4}` }
                         ],
-                        explanation: "Gráfico A = 3 3/4 (15 cuartos), Gráfico B = 2 2/5 (12 quintos) y Gráfico C = 3 1/2 (7 mitades)."
+                        explanation: "Gráfico A = 15/4, Gráfico B = 12/5 y Gráfico C = 7/2."
                     }
                 ]
             },
@@ -539,7 +539,7 @@
                             { latex: String.raw`4\dfrac{1}{3}`, correct: false },
                             { latex: String.raw`3\dfrac{1}{4}`, correct: true },
                             { latex: String.raw`3\dfrac{3}{4}`, correct: false },
-                            { latex: String.raw`2\dfrac{5}{4}`, correct: false }
+                            { latex: String.raw`2\dfrac{1}{4}`, correct: false }
                         ],
                         explanation: "13 ÷ 4 tiene cociente 3 (parte entera) y residuo 1 (numerador), manteniendo el divisor 4 abajo → 3 1/4."
                     },
@@ -599,8 +599,8 @@
             {
                 id: 3,
                 title: "Bloque 3",
-                name: "Traza y Pinta Equivalentes",
-                shortDesc: "¡Traza cortes (÷2, ÷3 y ÷4) y pinta exactamente el mismo tamaño!",
+                name: "Divide, Agrupa y Pinta",
+                shortDesc: "Divide cada pieza en 2, 3, 4 o 5 partes, o agrupa de dos en dos. Conserva el área pintada.",
                 colorFrom: "from-emerald-500",
                 colorTo: "to-teal-700",
                 badgeBg: "bg-emerald-500",
@@ -671,45 +671,46 @@
                     },
                     {
                         id: "3-4",
-                        prompt: "Observa 1/4 pintado. Traza 2 líneas horizontales (3 filas) y pinta exactamente la misma columna:",
+                        prompt: "El gráfico muestra 6/8. Agrupa las piezas de dos en dos quitando la línea horizontal. Luego pinta la misma región:",
                         baseCols: 4,
-                        baseRows: 1,
-                        basePaintedCols: 1,
+                        baseRows: 2,
+                        basePaintedCols: 3,
                         targetCols: 4,
-                        targetRows: 3,
+                        targetRows: 1,
                         cutOrientation: "horizontal",
-                        cutCount: 2,
+                        cutCount: 1,
+                        grouping: true,
                         baseColor: "#f97316",
                         targetColor: "#10b981",
-                        baseLatex: String.raw`\dfrac{1}{4}`,
+                        baseLatex: String.raw`\dfrac{6}{8}`,
                         options: [
-                            { latex: String.raw`\dfrac{2}{12}`, correct: false },
-                            { latex: String.raw`\dfrac{4}{12}`, correct: false },
-                            { latex: String.raw`\dfrac{3}{12}`, correct: true },
-                            { latex: String.raw`\dfrac{3}{8}`, correct: false }
+                            { latex: String.raw`\dfrac{2}{4}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{8}`, correct: false },
+                            { latex: String.raw`\dfrac{3}{4}`, correct: true },
+                            { latex: String.raw`\dfrac{4}{6}`, correct: false }
                         ],
-                        explanation: "Con 2 líneas horizontales dividimos los cuartos en 3 filas (4 × 3 = 12 partes) y la franja pintada tiene 3 → 1/4 = 3/12."
+                        explanation: "Cada par de piezas forma un cuarto. Agrupamos las 6 piezas pintadas y las 8 piezas totales: 6 ÷ 2 = 3 y 8 ÷ 2 = 4. La región pintada sigue siendo la misma: 6/8 = 3/4."
                     },
                     {
                         id: "3-5",
-                        prompt: "¡Reto maestro! Tenemos 2/5 pintados. Traza 3 líneas horizontales (4 filas) y pinta el mismo tamaño:",
+                        prompt: "¡Reto maestro! Tenemos 2/5 pintados. Traza 4 líneas horizontales (5 filas) y pinta el mismo tamaño:",
                         baseCols: 5,
                         baseRows: 1,
                         basePaintedCols: 2,
                         targetCols: 5,
-                        targetRows: 4,
+                        targetRows: 5,
                         cutOrientation: "horizontal",
-                        cutCount: 3,
+                        cutCount: 4,
                         baseColor: "#ec4899",
                         targetColor: "#6366f1",
                         baseLatex: String.raw`\dfrac{2}{5}`,
                         options: [
-                            { latex: String.raw`\dfrac{6}{20}`, correct: false },
-                            { latex: String.raw`\dfrac{8}{20}`, correct: true },
-                            { latex: String.raw`\dfrac{10}{20}`, correct: false },
+                            { latex: String.raw`\dfrac{6}{25}`, correct: false },
+                            { latex: String.raw`\dfrac{10}{25}`, correct: true },
+                            { latex: String.raw`\dfrac{12}{25}`, correct: false },
                             { latex: String.raw`\dfrac{8}{15}`, correct: false }
                         ],
-                        explanation: "Al trazar 3 líneas horizontales obtenemos 4 filas × 5 columnas = 20 partes, y las 2 columnas pintadas suman 8 → 2/5 = 8/20."
+                        explanation: "Al trazar 4 líneas horizontales obtenemos 5 filas × 5 columnas = 25 partes, y las 2 columnas pintadas suman 10 → 2/5 = 10/25."
                     }
                 ]
             }
@@ -734,7 +735,7 @@
         }) => {
             const { graphs, fractions } = exercise;
             const linkColors = ['#0284c7', '#ea580c', '#059669'];
-            const allLinked = Object.keys(links).length === graphs.length;
+            const allLinked = graphs.every((_, i) => links[i] && cellsByGraph[i]?.some(Boolean));
 
             // Verificar si una fracción ya está vinculada a algún gráfico
             const getGraphLinkedToFrac = (fracId) => {
@@ -747,7 +748,7 @@
                     {/* Instrucción rápida + Reiniciar */}
                     <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
                         <div className="text-xs sm:text-sm font-extrabold text-slate-700">
-                            <span className="text-indigo-700 font-black">Paso 1:</span> Pinta cada gráfico según las fracciones de la derecha.{' '}
+                            <span className="text-indigo-700 font-black">Paso 1:</span> Mira en cuántas partes se divide cada unidad. Elige la fracción que cabe y pinta tantas piezas como indica su numerador.{' '}
                             <span className="text-emerald-700 font-black">Paso 2:</span> Toca <strong>"Vincular"</strong> y luego su fracción.
                         </div>
                         {checkedStatus === null && (
@@ -838,8 +839,9 @@
                                             {checkedStatus === null ? (
                                                 <button
                                                     type="button"
+                                                    disabled={paintedCount === 0}
                                                     onClick={() => onSelectGraph(gIdx)}
-                                                    className={`px-3 py-2 rounded-xl font-black text-xs transition-all flex items-center gap-1.5 border-2 ${
+                                                    className={`px-3 py-2 rounded-xl font-black text-xs disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-1.5 border-2 ${
                                                         isSelected
                                                             ? 'bg-yellow-400 text-slate-950 border-amber-500 scale-105 shadow-md'
                                                             : linkedFrac
@@ -853,7 +855,7 @@
                                                             <MathDisplay inline latex={linkedFrac.latex} />
                                                         </>
                                                     ) : (
-                                                        <span>{isSelected ? '👉 Elige fracción →' : '🔗 Vincular'}</span>
+                                                        <span>{isSelected ? '👉 Elige fracción →' : paintedCount ? '🔗 Vincular' : 'Pinta para vincular'}</span>
                                                     )}
                                                 </button>
                                             ) : (
@@ -989,7 +991,7 @@
 
                         {/* FLUJO DE DERECHA A IZQUIERDA (flex-row-reverse en desktop) */}
                         {direction === 'improper_to_mixed' ? (
-                            <div className="my-auto flex flex-col md:flex-row-reverse items-center justify-around gap-3 py-2">
+                            <div className="my-auto flex flex-col md:flex-row-reverse flex-wrap items-center justify-around gap-3 py-2">
                                 
                                 {/* PASO 1 (INICIA A LA DERECHA): FRACCIÓN IMPROPIA */}
                                 <div className="animate-slideRTL flex flex-col items-center bg-sky-50 border-2 border-sky-300 rounded-2xl px-4 py-2.5 min-w-[130px]">
@@ -1056,7 +1058,7 @@
                             </div>
                         ) : (
                             /* MIXTO A IMPROPIA DE DERECHA A IZQUIERDA */
-                            <div className="my-auto flex flex-col md:flex-row-reverse items-center justify-around gap-3 py-2">
+                            <div className="my-auto flex flex-col md:flex-row-reverse flex-wrap items-center justify-around gap-3 py-2">
                                 
                                 {/* PASO 1 (DERECHA): NÚMERO MIXTO */}
                                 <div className="animate-slideRTL flex flex-col items-center bg-orange-50 border-2 border-orange-300 rounded-2xl px-4 py-2.5 min-w-[135px]">
@@ -1106,6 +1108,14 @@
                             </div>
                         )}
 
+                        <div className="my-2 px-2 py-2 rounded-xl bg-indigo-50 text-indigo-900 text-center text-sm font-black">
+                            {direction === 'improper_to_mixed' ? (
+                                <span>{num} ÷ {den} = {whole}, residuo {rem} · {den} × {whole} + {rem} = {num}</span>
+                            ) : (
+                                <MathDisplay latex={String.raw`\dfrac{${whole}\times ${den}+${rem}}{${den}}=\dfrac{${num}}{${den}}`} />
+                            )}
+                        </div>
+
                         {animStep < 2 && (
                             <button
                                 type="button"
@@ -1121,16 +1131,17 @@
         };
 
         // --- BLOQUE 3: TRAZAR LÍNEAS DE CORTE (÷2, ÷3, ÷4) Y PINTAR EQUIVALENTES ---
-        const Block3Visual = ({ exercise, cutsDone, onMakeCut, targetCells, onToggleTargetCell, onResetBlock3 }) => {
+        const Block3Visual = ({ exercise, cutsDone, onMakeCut, targetCells, onToggleTargetCell, onResetBlock3, checked }) => {
             const {
                 baseCols, baseRows, basePaintedCols, basePaintedRows,
-                targetCols, targetRows, cutOrientation, cutCount,
+                cutOrientation, cutCount, grouping,
                 baseColor, targetColor, baseLatex
             } = exercise;
 
             const isCutComplete = cutsDone >= cutCount;
-            const currentRows = cutOrientation === 'horizontal' ? (1 + cutsDone) : baseRows;
-            const currentCols = cutOrientation === 'vertical' ? (1 + cutsDone) : baseCols;
+            const change = grouping ? -cutsDone : cutsDone;
+            const currentRows = baseRows + (cutOrientation === 'horizontal' ? change : 0);
+            const currentCols = baseCols + (cutOrientation === 'vertical' ? change : 0);
             const totalParts = currentRows * currentCols;
             const paintedCount = targetCells.slice(0, totalParts).filter(Boolean).length;
 
@@ -1145,17 +1156,20 @@
                     <div className="w-full max-w-2xl flex flex-wrap items-center justify-between gap-2 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200">
                         <div className="flex items-center gap-2">
                             <span className={`px-2.5 py-1 rounded-lg text-xs font-black ${isCutComplete ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-200 text-amber-900 animate-pulse'}`}>
-                                {isCutComplete ? `1. ¡${cutCount} corte(s) listos! ✓` : `1. Traza corte ${cutsDone + 1} de ${cutCount}`}
+                                {grouping
+                                    ? (isCutComplete ? '1. Agrupación lista ✓' : '1. Agrupa de dos en dos')
+                                    : (isCutComplete ? '1. División lista ✓' : `1. Traza línea ${cutsDone + 1} de ${cutCount}`)}
                             </span>
                             <span className={`px-2.5 py-1 rounded-lg text-xs font-black ${isCutComplete ? 'bg-pink-100 text-pink-800' : 'bg-slate-200 text-slate-500'}`}>
                                 2. Pinta el mismo tamaño ({paintedCount}/{totalParts})
                             </span>
                         </div>
                         <button
+                            disabled={checked}
                             onClick={onResetBlock3}
                             className="px-2.5 py-1 text-xs font-black bg-white text-slate-700 border border-slate-300 rounded-lg hover:bg-slate-50 active:scale-95"
                         >
-                            ↺ Reiniciar trazo
+                            ↺ Reiniciar gráfico
                         </button>
                     </div>
 
@@ -1214,6 +1228,9 @@
                                             <button
                                                 key={idx}
                                                 type="button"
+                                                aria-label={`Parte ${idx + 1}`}
+                                                aria-pressed={Boolean(isPainted)}
+                                                disabled={!isCutComplete || checked}
                                                 onClick={() => onToggleTargetCell(idx)}
                                                 style={{ backgroundColor: isPainted ? targetColor : '#e5e7eb' }}
                                                 className={`transition-colors duration-150 cursor-pointer flex items-center justify-center focus:outline-none ${
@@ -1237,7 +1254,7 @@
                                         className="absolute inset-0 flex items-center justify-center bg-slate-900/20 hover:bg-slate-900/30 rounded-2xl transition-all group cursor-pointer"
                                     >
                                         <span className="px-3 py-1.5 rounded-full bg-yellow-400 text-slate-950 font-black text-xs shadow-lg border-2 border-slate-900 group-hover:scale-110 transition-transform">
-                                            ✂️ Trazar línea {cutOrientation === 'horizontal' ? 'horizontal' : 'vertical'} ({cutsDone + 1}/{cutCount})
+                                            {grouping ? 'Agrupar de dos en dos' : `✂️ Trazar línea ${cutOrientation === 'horizontal' ? 'horizontal' : 'vertical'} (${cutsDone + 1}/${cutCount})`}
                                         </span>
                                     </button>
                                 )}
@@ -1407,16 +1424,7 @@
                     setB2AnimStep(0);
                 } else if (blockIdx === 2) {
                     setB3Cuts(0);
-                    const maxCells = curEx.targetCols * curEx.targetRows;
-                    const initialBaseTotal = curEx.baseCols * curEx.baseRows;
-                    const initArr = Array(maxCells).fill(false);
-                    for (let i = 0; i < initialBaseTotal; i++) {
-                        const r = Math.floor(i / curEx.baseCols);
-                        const c = i % curEx.baseCols;
-                        if (curEx.basePaintedCols !== undefined && c < curEx.basePaintedCols) initArr[i] = true;
-                        if (curEx.basePaintedRows !== undefined && r < curEx.basePaintedRows) initArr[i] = true;
-                    }
-                    setB3Cells(initArr);
+                    setB3Cells(Array(curEx.targetCols * curEx.targetRows).fill(false));
                 }
             }, [blockIdx, exIdx]);
 
@@ -1458,17 +1466,29 @@
                 }
             };
 
+            const b3Ready = blockIdx !== 2 || (b3Cuts === curEx.cutCount && b3Cells.some(Boolean));
+
             const handleSelectOption = (optIndex) => {
-                if (answerStatus !== null) return;
+                if (answerStatus !== null || !b3Ready) return;
                 handleInteraction();
                 setSelectedOpt(optIndex);
                 const chosen = curEx.options[optIndex];
-                registerResult(chosen.correct);
+                const sameRegion = blockIdx !== 2 || b3Cells.every((painted, idx) => {
+                    const row = Math.floor(idx / curEx.targetCols);
+                    const col = idx % curEx.targetCols;
+                    const baseRow = Math.floor(row * curEx.baseRows / curEx.targetRows);
+                    const baseCol = Math.floor(col * curEx.baseCols / curEx.targetCols);
+                    const shouldPaint = curEx.basePaintedCols !== undefined
+                        ? baseCol < curEx.basePaintedCols
+                        : baseRow < curEx.basePaintedRows;
+                    return painted === shouldPaint;
+                });
+                registerResult(chosen.correct && sameRegion);
             };
 
             // Verificación específica para Bloque 1 (3 gráficos pintados y vinculados)
             const handleVerifyBlock1 = () => {
-                if (answerStatus !== null) return;
+                if (answerStatus !== null || !curEx.graphs.every((_, i) => b1Links[i] && b1CellsByGraph[i]?.some(Boolean))) return;
                 handleInteraction();
                 const allCorrect = curEx.graphs.every((g, gIdx) => {
                     const painted = (b1CellsByGraph[gIdx] || []).filter(Boolean).length;
@@ -1712,6 +1732,12 @@
                                     onToggleCell={(gIdx, cIdx) => {
                                         handleInteraction();
                                         AudioController.play('pop');
+                                        setB1Links(prev => {
+                                            const updated = { ...prev };
+                                            delete updated[gIdx];
+                                            return updated;
+                                        });
+                                        setB1SelectedGraph(null);
                                         setB1CellsByGraph(prev =>
                                             prev.map((arr, idx) =>
                                                 idx === gIdx ? arr.map((v, i) => (i === cIdx ? !v : v)) : arr
@@ -1726,7 +1752,7 @@
                                     }}
                                     links={b1Links}
                                     onLinkFraction={(fracId) => {
-                                        if (b1SelectedGraph === null) return;
+                                        if (b1SelectedGraph === null || !b1CellsByGraph[b1SelectedGraph]?.some(Boolean)) return;
                                         handleInteraction();
                                         AudioController.play('cut');
                                         setB1Links(prev => {
@@ -1781,7 +1807,7 @@
                             </div>
                         ) : (
                             /* BLOQUES 2 Y 3: LABORATORIO VISUAL + OPCIONES DE RESPUESTA */
-                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row bg-slate-50 overflow-y-auto lg:overflow-hidden relative">
+                            <div className="flex-1 min-h-0 flex flex-col lg:flex-row bg-slate-50 overflow-y-auto relative">
                                 
                                 <div className="w-full lg:w-[60%] flex-1 p-3 sm:p-5 flex items-center justify-center border-b-2 lg:border-b-0 lg:border-r-2 border-slate-200 relative z-10">
                                     {blockIdx === 1 && (
@@ -1805,6 +1831,7 @@
                                         <Block3Visual
                                             exercise={curEx}
                                             cutsDone={b3Cuts}
+                                            checked={answerStatus !== null}
                                             onMakeCut={() => {
                                                 handleInteraction();
                                                 AudioController.play('cut');
@@ -1825,16 +1852,7 @@
                                                 handleInteraction();
                                                 AudioController.play('swoosh');
                                                 setB3Cuts(0);
-                                                const maxCells = curEx.targetCols * curEx.targetRows;
-                                                const initialBaseTotal = curEx.baseCols * curEx.baseRows;
-                                                const initArr = Array(maxCells).fill(false);
-                                                for (let i = 0; i < initialBaseTotal; i++) {
-                                                    const r = Math.floor(i / curEx.baseCols);
-                                                    const c = i % curEx.baseCols;
-                                                    if (curEx.basePaintedCols !== undefined && c < curEx.basePaintedCols) initArr[i] = true;
-                                                    if (curEx.basePaintedRows !== undefined && r < curEx.basePaintedRows) initArr[i] = true;
-                                                }
-                                                setB3Cells(initArr);
+                                                setB3Cells(Array(curEx.targetCols * curEx.targetRows).fill(false));
                                             }}
                                         />
                                     )}
@@ -1842,7 +1860,7 @@
 
                                 <div className="w-full lg:w-[40%] p-4 sm:p-6 flex flex-col justify-center gap-4 bg-white relative z-10">
                                     <div className="text-xs font-black uppercase tracking-widest text-indigo-600 text-center">
-                                        Selecciona tu respuesta:
+                                        {b3Ready ? 'Selecciona tu respuesta' : 'Completa el gráfico y pinta la región para responder'}
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto w-full">
@@ -1864,9 +1882,9 @@
                                             return (
                                                 <button
                                                     key={idx}
-                                                    disabled={answerStatus !== null}
+                                                    disabled={answerStatus !== null || !b3Ready}
                                                     onClick={() => handleSelectOption(idx)}
-                                                    className={`p-3 sm:p-4 rounded-2xl border-[3px] font-black transition-all flex items-center justify-center gap-2.5 cursor-pointer relative math-option ${cardStyle}`}
+                                                    className={`p-3 sm:p-4 rounded-2xl border-[3px] font-black transition-all flex items-center justify-center gap-2.5 cursor-pointer disabled:cursor-not-allowed relative math-option ${cardStyle}`}
                                                 >
                                                     <span className="w-7 h-7 rounded-lg bg-slate-800 text-white text-xs font-black flex items-center justify-center shrink-0">
                                                         {letters[idx]}
@@ -1886,7 +1904,7 @@
                                             <div className="font-black text-sm sm:text-base mb-1">
                                                 {answerStatus === 'correct'
                                                     ? '🎉 ¡Respuesta Correcta! +20 puntos'
-                                                    : '💡 ¡No pasa nada! Seguimos avanzando (0 pts)'}
+                                                    : (blockIdx === 2 ? '💡 Revisa que la región pintada y la fracción coincidan con el modelo (0 pts)' : '💡 Revisemos la conversión (0 pts)')}
                                             </div>
                                             {curEx.explanation && (
                                                 <p className="text-xs font-bold opacity-90 mb-3">{curEx.explanation}</p>
